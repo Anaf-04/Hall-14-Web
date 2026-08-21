@@ -120,8 +120,8 @@ export default function SiteMenu({ children }) {
           className={`group fixed top-4 right-4 z-50 flex h-18 w-18 items-center justify-center 
             border-2 border-[#8B0000] bg-black transition-[transform,opacity,background-color] 
             ease-out hover:opacity-20 ${menuOpen
-            ? "translate-x-0 opacity-100"
-            : "pointer-events-none translate-x-100 opacity-0"
+              ? "translate-x-0 opacity-100"
+              : "pointer-events-none translate-x-100 opacity-0"
             }`}
         >
           <span className="absolute bottom-full right-0 top-35 whitespace-nowrap -rotate-90 text-lg font-bold text-white">
@@ -222,7 +222,7 @@ export default function SiteMenu({ children }) {
         </button>
       </div>
 
-      <footer className="flex h-[350px] shrink-0 flex-col bg-black text-white">
+      <footer className="flex h-[200px] shrink-0 flex-col bg-black text-white">
         <div className="flex flex-1 flex-col items-center justify-center gap-1">
           <button
             ref={pageTopButtonRef}
@@ -260,27 +260,19 @@ export default function SiteMenu({ children }) {
           </button>
         </div>
 
-        <div className="flex w-[80%] sm:w-[30%]  items-center justify-between mx-auto">
-          <div className="flex flex-col items-center justify-center gap-1">
-            <h1 className="text-xl font-bold sm:text-2xl">CITYUHK</h1>
-            <a href="https://www.cityu.edu.hk/sro/StudentHousing/UGHalls/HallAdmission/MOS/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#8b0000]">
-              Ma on Shan Compound
+        <div className="flex flex-1 flex-col items-center justify-center gap-1 px-8 text-center text-xs text-white/70 sm:text-sm">
+        <div className="flex w-[100%] items-center justify-center gap-2">
+            <a href="mailto:hall14mos@gmail.com" className="text-white/70 hover:text-[#8b0000]">
+              Contact Us |
             </a>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <h1 className="text-xl font-bold sm:text-2xl">HALL 14</h1>
+            <a href="https://www.cityu.edu.hk/sro/StudentHousing/UGHalls/HallAdmission/MOS/" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#8b0000]">
+              Ma on Shan Compound |
+            </a>
             <a href="https://www.cityu.edu.hk/sro/AboutUs/MOS/ResidenceHalls/SR14.htm" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-[#8b0000]">
               About Us
             </a>
           </div>
-          
-        </div>
-
-        <div className="flex flex-1 flex-col items-center justify-center gap-1 px-8 text-center text-xs text-white/70 sm:text-sm">
           <p>&copy; {new Date().getFullYear()} Hall 14, City University of Hong Kong. All rights reserved.</p>
-          <a href="mailto:hall14mos@gmail.com" className="text-white/70 hover:text-[#8b0000]">
-            Contact Us
-          </a>
         </div>
       </footer>
     </div>

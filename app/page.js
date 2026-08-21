@@ -5,7 +5,7 @@ import SiteMenu from "./components/SiteMenu";
 export default function Home() {
   return (
     <SiteMenu>
-      <div className="flex w-[90%] flex-col gap-6 sm:w-[85%] sm:flex-row sm:justify-center">
+      <div className="flex w-[90%] flex-col gap-6 sm:w-[85%] sm:flex-row sm:justify-center py-24">
         <div className="flex-1 flex-column gap-1 justify-center">
           <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white transition-colors sm:p-8">
             <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Welcome to Hall 14</h2>
