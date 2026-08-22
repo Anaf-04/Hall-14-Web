@@ -106,6 +106,8 @@ SELECT n, n, 'AVAILABLE' FROM generate_series(1, 15) AS n;
 
 ALTER TABLE residents ADD COLUMN IF NOT EXISTS email TEXT;
 ALTER TABLE vacuums ADD COLUMN IF NOT EXISTS reminder_sent_at TIMESTAMPTZ;
+ALTER TABLE residents ADD COLUMN IF NOT EXISTS otp_code TEXT;
+ALTER TABLE residents ADD COLUMN IF NOT EXISTS otp_expires_at TIMESTAMPTZ;
 
 -- Security fix: remove the public UPDATE policy on vacuums. Vacuum
 -- status now only changes through server-side API routes (borrow,

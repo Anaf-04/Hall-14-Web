@@ -28,7 +28,7 @@ export default function VacuumCard({ vacuum, isMine, onReturn, returning }) {
             ${isAvailable ? "bg-green-900 text-green-200" : "bg-[#8B0000] text-white"
             }`}
         >
-          {isAvailable ? "Available" : "Borrowed"}
+          {isAvailable ? "Available" : "Borrowed"} 
         </span>)}
 
       </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import SiteMenuBlack from "../components/SiteMenuBlack";
 import { FEATHER_PATH } from "../components/SiteMenuBlack";
+import Image from "next/image";
 
 export default function Facilities() {
   return (
@@ -13,9 +14,19 @@ export default function Facilities() {
           className="flex-1 rounded-tl-3xl rounded-br-3xl bg-[#8b0000]/70 p-6 text-white transition-colors hover:bg-[#4f0000]/85 sm:p-8"
         >
           <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Portable Vacuum</h2>
-          <p className="text-sm leading-relaxed sm:text-base">
-            Located in each floor. Check out availability. Tap the Poke Ball to borrow.
-          </p>
+          <div className="text-sm leading-relaxed sm:text-base">
+            Located in each floor. Check out availability.
+            <div className="flex gap-1 item-center h-10">
+              <Image
+                src="/img/pokeball.png"
+                alt=""
+                width={30}
+                height={30}
+                className="object-contain"
+              />
+              <div className="flex items-center ml-2">Tap the Poke Ball to borrow.</div>
+            </div>
+          </div>
         </Link>
 
         <Link
@@ -25,22 +36,27 @@ export default function Facilities() {
           <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Laundry Room</h2>
           <div className="text-sm leading-relaxed sm:text-base">
             Located in 1/F. Check out availability of our:
-            <div className="flex gap-1 item-center h-10 mt-2">
-              <svg
-                width="70"
-                height="70"
-                viewBox="0 0 130 130"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g
-                  className={`transition-all duration-750 ease-out delay-0 translate-x-0 translate-y-[60px] opacity-100 group-hover:translate-y-[70px]`}
-                >
-                  <path d={FEATHER_PATH} fill="#fff" transform="rotate(45 100 100)" />
-                </g>
-              </svg>
-              7 WASHING MACHINES
+            <div className="flex gap-1 item-center h-10">
+              <Image
+                src="/img/Washer.png"
+                alt=""
+                width={30}
+                height={30} 
+                className="object-contain"
+              />
+              <div className="flex items-center ml-2">7 WASHING MACHINES</div> 
             </div>
             <div className="flex gap-1 item-center h-10">
+              <Image
+                src="/img/Dryer.png"
+                alt=""
+                width={30}
+                height={30} 
+                className="object-contain"
+              />
+              <div className="flex items-center ml-2">7 DRYER</div>
+            </div>
+            {/* <div className="flex gap-1 item-center h-10">
               <svg
                 width="70"
                 height="70"
@@ -54,7 +70,7 @@ export default function Facilities() {
                 </g>
               </svg>
               7 DRYERS
-            </div>
+            </div> */}
           </div>
         </Link>
       </div>

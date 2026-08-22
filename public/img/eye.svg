@@ -764,6 +764,7 @@
         dur="1.5s"
         fill="freeze"
         calcMode="spline"
+        repeatCount="indefinite"
         keyTimes="0; 0.5; 1"
         keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
     </circle>
@@ -773,6 +774,7 @@
         dur="1.5s"
         fill="freeze"
         calcMode="spline"
+        repeatCount="indefinite"
         keyTimes="0; 0.5; 1"
         keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" />
     </circle>

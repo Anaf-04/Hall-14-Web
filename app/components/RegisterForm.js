@@ -4,17 +4,99 @@ import { useState } from "react";
 import Image from "next/image";
 
 export default function RegisterForm({ vacuumFloor, onSubmit, submitting, error }) {
+  const [step, setStep] = useState("details"); // "details" | "otp"
   const [sid, setSid] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState(null);
+  const [sendingOtp, setSendingOtp] = useState(false);
+  const [verifyingOtp, setVerifyingOtp] = useState(false);
 
-  function handleSubmit(event) {
+  async function handleDetailsSubmit(event) {
     event.preventDefault();
-    onSubmit({ sid: sid.trim(), email: email.trim(), phone_number: phone.trim() });
+    setOtpError(null);
+    setSendingOtp(true);
+    try {
+      const response = await fetch("/api/residents/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sid: sid.trim(), email: email.trim() }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setOtpError(data.error || "Something went wrong.");
+        return;
+      }
+      if (data.alreadyVerified) {
+        onSubmit({ sid: sid.trim(), email: email.trim(), phone_number: phone.trim() });
+        return;
+      }
+      setStep("otp");
+    } catch {
+      setOtpError("Network error. Please try again.");
+    } finally {
+      setSendingOtp(false);
+    }
+  }
+
+  async function handleOtpSubmit(event) {
+    event.preventDefault();
+    setOtpError(null);
+    setVerifyingOtp(true);
+    try {
+      const response = await fetch("/api/residents/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sid: sid.trim(), code: otp.trim() }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setOtpError(data.error || "Something went wrong.");
+        return;
+      }
+      onSubmit({ sid: sid.trim(), email: email.trim(), phone_number: phone.trim() });
+    } catch {
+      setOtpError("Network error. Please try again.");
+    } finally {
+      setVerifyingOtp(false);
+    }
+  }
+
+  if (step === "otp") {
+    return (
+      <form onSubmit={handleOtpSubmit} className="grid grid-cols-1 gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white sm:p-8">
+        <p className="text-sm font-medium">
+          Enter the 6-digit code sent to {email}.
+        </p>
+        <input
+          type="text"
+          inputMode="numeric"
+          placeholder="6-digit code"
+          value={otp}
+          onChange={(event) => setOtp(event.target.value)}
+          required
+          pattern="\d{6}"
+          maxLength={6}
+          className="rounded-tl-3xl rounded-br-3xl border border-white/20 bg-black/40 px-3 py-2 text-center text-lg tracking-widest text-white placeholder:text-white/50"
+        />
+        {(otpError || error) && <p className="text-sm text-red-400">{otpError || error}</p>}
+        <button type="submit" disabled={verifyingOtp || submitting} className="rounded-tl-3xl rounded-br-3xl bg-[#a35c00] px-4 py-2 text-sm text-white transition-colors hover:bg-[#8b0000] disabled:opacity-50">
+          {verifyingOtp || submitting ? "Verifying..." : "Verify & Borrow"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setStep("details")}
+          className="text-xs text-white/60 underline"
+        >
+          Back
+        </button>
+      </form>
+    );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white sm:p-8">
+    <form onSubmit={handleDetailsSubmit} className="grid grid-cols-1 gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white sm:p-8">
       <p className="text-sm font-medium">
         First time borrowing the Floor {vacuumFloor} vacuum. Enter your details.
       </p>
@@ -30,12 +112,12 @@ export default function RegisterForm({ vacuumFloor, onSubmit, submitting, error 
           />
           <span className="text-sm text-white">+852</span>
         </div>
-        <input type="tel" inputMode="tel" placeholder="Hong Kong phone number" value={phone} onChange={(event) => setPhone(event.target.value)} required className="w-full rounded-tl-3xl rounded-br-3xl border border-white/20 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-white/50" />
+        <input type="tel" inputMode="tel" placeholder="12345678" value={phone} onChange={(event) => setPhone(event.target.value)} className="w-full rounded-tl-3xl rounded-br-3xl border border-white/20 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-white/50" />
       </div>
       <input type="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} required className="rounded-tl-3xl rounded-br-3xl border border-white/20 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-white/50" />
-      {error && <p className="text-sm text-red-400">{error}</p>}
-      <button type="submit" disabled={submitting} className="rounded-tl-3xl rounded-br-3xl bg-[#a35c00] px-4 py-2 text-sm text-white transition-colors hover:bg-[#8b0000] disabled:opacity-50">
-        {submitting ? "Borrowing..." : `Confirm Borrow Vacuum #${vacuumFloor}`}
+      {(otpError || error) && <p className="text-sm text-red-400">{otpError || error}</p>}
+      <button type="submit" disabled={sendingOtp || submitting} className="rounded-tl-3xl rounded-br-3xl bg-[#a35c00] px-4 py-2 text-sm text-white transition-colors hover:bg-[#8b0000] disabled:opacity-50">
+        {sendingOtp ? "Sending code..." : "Send verification code"}
       </button>
     </form>
   );

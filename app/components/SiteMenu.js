@@ -71,7 +71,7 @@ export default function SiteMenu({ children }) {
               src="/img/Hall14Logo.png"
               alt=""
               fill
-              className="object-cover absolute right-50 opacity-30 -z-10"
+              className="object-cover absolute right-50 grayscale-100 opacity-10 -z-10"
             />
             {NAV_LINKS.map((link, index) => (
               <Link

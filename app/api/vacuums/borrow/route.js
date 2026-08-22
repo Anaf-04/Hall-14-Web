@@ -48,7 +48,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         error:
-          "SID not found on the resident list. Contact your Hall admin to get registered.",
+          "SID NOT FOUND ! Only for Hall 14 Residents !",
       },
       { status: 404 }
     );

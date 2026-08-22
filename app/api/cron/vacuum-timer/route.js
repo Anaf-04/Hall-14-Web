@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { transporter } from "@/lib/mailer";
 import { supabaseAdmin } from "@/lib/supabase/server";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const REMINDER_AFTER_MS = 10 * 60 * 1000;
 const AUTO_RETURN_AFTER_MS = 15 * 60 * 1000;
@@ -54,8 +52,8 @@ export async function POST(request) {
       const email = emailBySid.get(v.borrower_sid);
       if (email) {
         try {
-          await resend.emails.send({
-            from: "Hall 14 Vacuums <onboarding@resend.dev>",
+          await transporter.sendMail({
+            from: `Hall 14 Vacuums <${process.env.GMAIL_USER}>`,
             to: email,
             subject: `Please return the Floor ${v.floor} vacuum`,
             text: `You've had the Floor ${v.floor} vacuum for 10 minutes. Please return it soon so other residents can use it.`,

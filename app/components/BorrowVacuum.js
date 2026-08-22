@@ -14,6 +14,7 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
   const [checking, setChecking] = useState(true);
   const [keyValid, setKeyValid] = useState(false);
   const [floor, setFloor] = useState(null);
+  const [roomNumber, setRoomNumber] = useState(null);
   const [vacuumStatus, setVacuumStatus] = useState(null);
   const [identity, setIdentity] = useState(null);
   const [borrowing, setBorrowing] = useState(false);
@@ -40,6 +41,7 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
           setKeyValid(true);
           setFloor(data.floor);
           setVacuumStatus(data.status);
+          setRoomNumber(data.roomNumber);
         } else {
           setKeyValid(false);
         }
@@ -123,9 +125,10 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
 
   if (vacuumStatus === "CHECKED_OUT" && !borrowed) {
     return (
-      <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
+      <div className="flex flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <p className="text-sm">
-          The Floor {floor} vacuum is already checked out by someone else.
+          <span className="text-[#fc8f01]">{roomNumber ? `Room ${roomNumber} ` : "someone else "}</span>
+          is using the 7th floor vacuum.
         </p>
       </div>
     );

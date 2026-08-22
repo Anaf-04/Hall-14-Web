@@ -14,7 +14,9 @@ export async function POST(request) {
 
   const { data: vacuum, error: vacuumError } = await supabaseAdmin
     .from("vacuums")
-    .select("id, floor, status, nfc_secret_key")
+    .select(
+      "id, floor, status, nfc_secret_key, resident:borrower_sid(room_number)"
+    )
     .eq("id", vacuum_id)
     .single();
 
@@ -30,5 +32,6 @@ export async function POST(request) {
     valid: true,
     floor: vacuum.floor,
     status: vacuum.status,
+    roomNumber: vacuum.resident?.room_number ?? null,
   });
 }
