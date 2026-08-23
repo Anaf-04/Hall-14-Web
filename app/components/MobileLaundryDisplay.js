@@ -15,7 +15,7 @@ export default function MachineCard({ machine }) {
     }
 
     return (
-        <div className="rounded-tl-3xl rounded-br-3xl bg-black/70 px-1 text-white flex-col gap-2">
+        <div className="px-1 text-white flex-col gap-2">
             {isDryer && (
                 <div className="flex items-center justify-center gap-3 sm:hidden">
                     <div className="flex min-w-0 items-center gap-2">
