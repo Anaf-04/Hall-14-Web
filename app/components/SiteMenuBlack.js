@@ -7,7 +7,7 @@ import Link from "next/link";
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
   { label: "FACILITIES", href: "/facilities" },
-  { label: "MEMORIES", href: "/memories" },
+  // { label: "MEMORIES", href: "/memories" },
   { label: "HALL RULES", href: "/hall-rules" },
 ];
 

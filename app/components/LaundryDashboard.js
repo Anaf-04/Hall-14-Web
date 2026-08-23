@@ -44,7 +44,7 @@ export default function LaundryDashboard() {
   return (
     <div className="flex w-full flex-col gap-6 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
       <h1 className="text-2xl font-semibold text-white">Hall 14 Laundry Status</h1>
-      <div className="grid grid-cols-7 sm:hidden">
+      <div className="grid grid-cols-7 xl:hidden">
         {dryers.map((m) => (
           <MobileLaundryDisplay key={`d-${m["Machine ID"]}`} machine={m} />
         ))}
@@ -54,7 +54,7 @@ export default function LaundryDashboard() {
       </div>
       <div className="flex w-full flex-col gap-3">
         <h2 className="text-lg font-semibold text-white/80">Dryers</h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-7">
+        <div className="grid grid-cols-1 gap-3 xl:grid-cols-7">
           {dryers.map((m) => (
             <MachineCard key={`d-${m["Machine ID"]}`} machine={m} />
           ))}
@@ -62,7 +62,7 @@ export default function LaundryDashboard() {
       </div>
       <div className="flex w-full flex-col gap-3">
         <h2 className="text-lg font-semibold text-white/80">Washing Machines</h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-7">
+        <div className="grid grid-cols-1 gap-3 xl:grid-cols-7">
           {washers.map((m) => (
             <MachineCard key={`w-${m["Machine ID"]}`} machine={m} />
           ))}

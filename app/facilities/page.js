@@ -20,8 +20,8 @@ export default function Facilities() {
               <Image
                 src="/img/pokeball.png"
                 alt=""
-                width={30}
-                height={30}
+                width={25}
+                height={25}
                 className="object-contain"
               />
               <div className="flex items-center ml-2">Tap the Poke Ball to borrow.</div>

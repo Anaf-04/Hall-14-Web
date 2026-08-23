@@ -15,15 +15,15 @@ export default function MachineCard({ machine }) {
   }
 
   return (
-    <div className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-4 text-white flex-col gap-2">
-      <div className="flex items-center justify-center gap-3">
+    <div className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-4 text-white flex-col gap-2 flex justify-between">
+      <div className="flex items-center justify-center gap-3" width={100}>
         {isDryer ? (
           <Image
             src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
             alt=""
             width={isAvailable ? 100 : 70}
             height={100}
-            className={`${isAvailable ? "mr-7" : "opacity-50"} hidden sm:block`}
+            className={`${isAvailable ? "mr-7" : "opacity-40 mt-5"} hidden xl:block`}
           />
         ) : (
           <Image
@@ -31,11 +31,11 @@ export default function MachineCard({ machine }) {
             alt=""
             width={isAvailable ? 100 : 70}
             height={100}
-            className={`${isAvailable ? "ml-7" : "opacity-50"} hidden sm:block`}
+            className={`${isAvailable ? "ml-7" : "opacity-40 mt-5"} hidden xl:block`}
           />
         )}
       </div>
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center justify-between gap-3 xl:flex-col">
         <div className="flex min-w-0 items-center gap-2">
           <span className="shrink-0 font-bold">{isDryer ? "D" : "W"}{machine["Machine ID"]}</span>
         </div>
