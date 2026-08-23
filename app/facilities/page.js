@@ -38,23 +38,23 @@ export default function Facilities() {
             Located in 1/F. Check out availability of our:
             <div className="flex gap-1 item-center h-10">
               <Image
-                src="/img/Washer.png"
+                src="/img/dryerClosed.png"
                 alt=""
-                width={30}
+                width={20}
+                height={30} 
+                className="object-contain"
+              />
+              <div className="flex items-center ml-2">7 DRYERS</div>
+            </div>
+            <div className="flex gap-1 item-center h-10">
+              <Image
+                src="/img/washerClosed.png"
+                alt=""
+                width={20}
                 height={30} 
                 className="object-contain"
               />
               <div className="flex items-center ml-2">7 WASHING MACHINES</div> 
-            </div>
-            <div className="flex gap-1 item-center h-10">
-              <Image
-                src="/img/Dryer.png"
-                alt=""
-                width={30}
-                height={30} 
-                className="object-contain"
-              />
-              <div className="flex items-center ml-2">7 DRYER</div>
             </div>
             {/* <div className="flex gap-1 item-center h-10">
               <svg
