@@ -42,7 +42,6 @@ export async function POST(request) {
       status: "AVAILABLE",
       last_returned_at: new Date().toISOString(),
       reminder_sent_at: null,
-      updated_at: new Date().toISOString(),
     })
     .eq("id", vacuum_id)
     .select()

@@ -65,7 +65,7 @@ export async function POST(request) {
 
       await supabaseAdmin
         .from("vacuums")
-        .update({ reminder_sent_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+        .update({ reminder_sent_at: new Date().toISOString() })
         .eq("id", v.id);
     }
   }
@@ -77,7 +77,6 @@ export async function POST(request) {
         status: "AVAILABLE",
         last_returned_at: new Date().toISOString(),
         reminder_sent_at: null,
-        updated_at: new Date().toISOString(),
       })
       .in(
         "id",

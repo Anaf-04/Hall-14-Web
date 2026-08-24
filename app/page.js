@@ -19,7 +19,7 @@ export default function Home() {
           </p>
           <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">7-9PM</h3>
           <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">August 24th - 28th</h3>
-        </div>
+        </div> 
       </div>
     </SiteMenu>
   );
