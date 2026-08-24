@@ -15,7 +15,7 @@ export async function POST(request) {
   const { data: vacuum, error: vacuumError } = await supabaseAdmin
     .from("vacuums")
     .select(
-      "id, floor, status, nfc_secret_key, resident:borrower_sid(room_number)"
+      "id, floor, status, nfc_secret_key, resident:last_borrower_sid(room_number)"
     )
     .eq("id", vacuum_id)
     .single();

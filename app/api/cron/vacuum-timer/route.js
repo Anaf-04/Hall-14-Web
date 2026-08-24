@@ -18,7 +18,7 @@ export async function POST(request) {
 
   const { data: checkedOut, error } = await supabaseAdmin
     .from("vacuums")
-    .select("id, floor, borrower_sid, checked_out_at, reminder_sent_at")
+    .select("id, floor, last_borrower_sid, last_borrowed_at, reminder_sent_at")
     .eq("status", "CHECKED_OUT");
 
   if (error) {
@@ -29,7 +29,7 @@ export async function POST(request) {
   const toAutoReturn = [];
 
   for (const v of checkedOut) {
-    const elapsed = now - new Date(v.checked_out_at).getTime();
+    const elapsed = now - new Date(v.last_borrowed_at).getTime();
     if (elapsed >= AUTO_RETURN_AFTER_MS) {
       toAutoReturn.push(v);
     } else if (elapsed >= REMINDER_AFTER_MS && !v.reminder_sent_at) {
@@ -38,7 +38,7 @@ export async function POST(request) {
   }
 
   if (toRemind.length > 0) {
-    const sids = toRemind.map((v) => v.borrower_sid);
+    const sids = toRemind.map((v) => v.last_borrower_sid);
     const { data: residents } = await supabaseAdmin
       .from("residents")
       .select("sid, email, name")
@@ -49,7 +49,7 @@ export async function POST(request) {
     );
 
     for (const v of toRemind) {
-      const email = emailBySid.get(v.borrower_sid);
+      const email = emailBySid.get(v.last_borrower_sid);
       if (email) {
         try {
           await transporter.sendMail({
@@ -65,7 +65,7 @@ export async function POST(request) {
 
       await supabaseAdmin
         .from("vacuums")
-        .update({ reminder_sent_at: new Date().toISOString() })
+        .update({ reminder_sent_at: new Date().toISOString(), updated_at: new Date().toISOString() })
         .eq("id", v.id);
     }
   }
@@ -75,9 +75,9 @@ export async function POST(request) {
       .from("vacuums")
       .update({
         status: "AVAILABLE",
-        borrower_sid: null,
-        checked_out_at: null,
+        last_returned_at: new Date().toISOString(),
         reminder_sent_at: null,
+        updated_at: new Date().toISOString(),
       })
       .in(
         "id",

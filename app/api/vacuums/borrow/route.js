@@ -73,9 +73,10 @@ export async function POST(request) {
     .from("vacuums")
     .update({
       status: "CHECKED_OUT",
-      borrower_sid: sid,
-      checked_out_at: new Date().toISOString(),
+      last_borrower_sid: sid,
+      last_borrowed_at: new Date().toISOString(),
       reminder_sent_at: null,
+      updated_at: new Date().toISOString(),
     })
     .eq("id", vacuum_id)
     .select()

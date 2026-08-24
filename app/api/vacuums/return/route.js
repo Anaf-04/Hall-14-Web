@@ -14,7 +14,7 @@ export async function POST(request) {
 
   const { data: vacuum, error: vacuumError } = await supabaseAdmin
     .from("vacuums")
-    .select("id, status, borrower_sid")
+    .select("id, status, last_borrower_sid")
     .eq("id", vacuum_id)
     .single();
 
@@ -29,7 +29,7 @@ export async function POST(request) {
     );
   }
 
-  if (vacuum.borrower_sid !== sid) {
+  if (vacuum.last_borrower_sid !== sid) {
     return NextResponse.json(
       { error: "This vacuum was checked out by a different SID." },
       { status: 403 }
@@ -40,9 +40,9 @@ export async function POST(request) {
     .from("vacuums")
     .update({
       status: "AVAILABLE",
-      borrower_sid: null,
-      checked_out_at: null,
+      last_returned_at: new Date().toISOString(),
       reminder_sent_at: null,
+      updated_at: new Date().toISOString(),
     })
     .eq("id", vacuum_id)
     .select()

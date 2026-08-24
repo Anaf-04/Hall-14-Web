@@ -37,7 +37,7 @@ export default function VacuumDashboard() {
       const { data, error } = await supabase
         .from("vacuums")
         .select(
-          "id, floor, status, borrower_sid, resident:borrower_sid(room_number)"
+          "id, floor, status, last_borrower_sid, resident:last_borrower_sid(room_number)"
         )
         .order("floor", { ascending: true });
       if (!error) setVacuums(data);
@@ -97,7 +97,7 @@ export default function VacuumDashboard() {
           <VacuumCard
             key={v.id}
             vacuum={v}
-            isMine={identity?.sid && v.borrower_sid === identity.sid}
+            isMine={identity?.sid && v.status === "CHECKED_OUT" && v.last_borrower_sid === identity.sid}
             onReturn={handleReturn}
             returning={returningId === v.id}
           />
