@@ -16,23 +16,27 @@ export default function MachineCard({ machine }) {
 
   return (
     <div className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-4 text-white flex-col gap-2 flex justify-between">
-      <div className="flex items-center justify-center gap-3" width={100}>
+      <div className="flex items-center justify-center gap-3">
         {isDryer ? (
-          <Image
-            src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
-            alt=""
-            width={isAvailable ? 100 : 70}
-            height={100}
-            className={`${isAvailable ? "mr-7" : "opacity-40 mt-5"} hidden xl:block`}
-          />
+          <div className={`${isAvailable ? "w-[100px] mr-7" : "w-[70px] opacity-40 mt-5"} hidden xl:block`}>
+            <Image
+              src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
+              alt=""
+              width={100}
+              height={100}
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
         ) : (
-          <Image
-            src={isAvailable ? "/img/washerOpen.png" : "/img/washerClosed.png"}
-            alt=""
-            width={isAvailable ? 100 : 70}
-            height={100}
-            className={`${isAvailable ? "ml-7" : "opacity-40 mt-5"} hidden xl:block`}
-          />
+          <div className={`${isAvailable ? "w-[100px] ml-7" : "w-[70px] opacity-40 mt-5"} hidden xl:block`}>
+            <Image
+              src={isAvailable ? "/img/washerOpened.png" : "/img/washerClosed.png"}
+              alt=""
+              width={100}
+              height={100}
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
         )}
       </div>
       <div className="flex items-center justify-between gap-3 xl:flex-col">
