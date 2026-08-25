@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: var(--font-Orbitron), Arial, Helvetica, sans-serif;
 }
+
+@keyframes slide-left {
+  0%, 42.86% {
+    transform: translateX(0);
+  }
+  50%, 92.86% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-left {
+  animation: slide-left 7s ease-in-out infinite;
+}

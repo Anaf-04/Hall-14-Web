@@ -8,17 +8,19 @@ export default function MachineCard({ machine }) {
   const isDryer = machine["Machine Type"] === "D";
 
   function timeBgClass() {
-    if (leftTime < 10) return "bg-[#81cd00]";
-    if (leftTime < 20) return "bg-[#cdb400]";
-    if (leftTime < 25) return "bg-[#cd6200]";
-    return "bg-[#8B0000]";
+    if (leftTime < 5) return "bg-green-600 text-black";
+    if (leftTime < 10) return "bg-[#81cd00] text-black";
+    if (leftTime < 15) return "bg-[#cd9c00] text-black";
+    if (leftTime < 20) return "bg-[#cdb400] text-black";
+    if (leftTime < 25) return "bg-[#cd6200] text-black";
+    return "bg-[#8B0000] text-white";
   }
 
   return (
     <div className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-4 text-white flex-col gap-2 flex justify-between">
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex items-center justify-center gap-3 hidden xl:block">
         {isDryer ? (
-          <div className={`${isAvailable ? "w-[100px] mr-7" : "w-[70px] opacity-40 mt-5"} hidden xl:block`}>
+          <div className={`${isAvailable ? "w-[100px] mr-7" : "w-[70px] opacity-40 mt-5"} `}>
             <Image
               src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
               alt=""
@@ -28,7 +30,7 @@ export default function MachineCard({ machine }) {
             />
           </div>
         ) : (
-          <div className={`${isAvailable ? "w-[100px] ml-7" : "w-[70px] opacity-40 mt-5"} hidden xl:block`}>
+          <div className={`${isAvailable ? "w-[100px] ml-7" : "w-[70px] opacity-40 mt-5"}`}>
             <Image
               src={isAvailable ? "/img/washerOpened.png" : "/img/washerClosed.png"}
               alt=""
@@ -44,11 +46,11 @@ export default function MachineCard({ machine }) {
           <span className="shrink-0 font-bold">{isDryer ? "D" : "W"}{machine["Machine ID"]}</span>
         </div>
         <span
-          className={`shrink-0 px-2 py-1 text-xs font-semibold rounded-tl-xl rounded-br-xl ${
+          className={`shrink-0 px-2 py-1 text-xs font-semibold rounded-tl-xl rounded-br-xl w-25 text-center ${
             isAvailable ? "bg-green-900 text-green-200" : timeBgClass()
           }`}
         >
-          {isAvailable ? "Available" : `${leftTime} mins left`}
+          {isAvailable ? "Available" : `${leftTime} mins`}
         </span>
       </div>
     </div>

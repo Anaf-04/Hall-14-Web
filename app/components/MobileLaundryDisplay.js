@@ -7,6 +7,15 @@ export default function MachineCard({ machine }) {
     const isAvailable = leftTime === 0;
     const isDryer = machine["Machine Type"] === "D";
 
+    function timeBgClass() {
+    if (leftTime < 5) return "bg-green-600 text-black";
+    if (leftTime < 10) return "bg-[#81cd00] text-black";
+    if (leftTime < 15) return "bg-[#cd9c00] text-black";
+    if (leftTime < 20) return "bg-[#cdb400] text-black";
+    if (leftTime < 25) return "bg-[#cd6200] text-black";
+    return "bg-[#8B0000] text-white";
+  }
+
     return (
         <div className="px-1 text-white flex-col gap-2 justify-between flex">
             {isDryer && (
@@ -18,7 +27,7 @@ export default function MachineCard({ machine }) {
             )}
             <div className="flex items-center justify-center gap-1 xl:hidden">
                 {isDryer ? (
-                    <div className={`${isAvailable ? "w-[30px] mr-2" : "w-[21px] opacity-40 mb-1.5"}`}>
+                    <div className={`${isAvailable ? "w-[30px] mr-2" : "w-[21px] opacity-40 mb-1.5 "}`}>
                         <Image
                             src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
                             alt=""
