@@ -11,7 +11,7 @@ export const metadata = {
   title: "Hall 14",
   description: "Welcome to Hall 14",
   icons: {
-    icon: "/img/logo.png",
+    icon: "/icons/logo.png",
   },
 };
 

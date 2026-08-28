@@ -68,7 +68,7 @@ export default function SiteMenu({ children }) {
         >
           <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20">
             <Image
-              src="/img/Hall14Logo.png"
+              src="/icons/Hall14Logo.png"
               alt=""
               fill
               className="object-cover absolute right-50 grayscale-100 opacity-10 -z-10"
@@ -99,7 +99,7 @@ export default function SiteMenu({ children }) {
             CITYUHK
           </span>
           <Image
-            src="/img/navImg.png"
+            src="/icons/navImg.png"
             alt="Hall 14 logo"
             width={72}
             height={72}

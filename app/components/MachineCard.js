@@ -13,16 +13,16 @@ export default function MachineCard({ machine }) {
     if (leftTime < 15) return "bg-[#cd9c00] text-black";
     if (leftTime < 20) return "bg-[#cdb400] text-black";
     if (leftTime < 25) return "bg-[#cd6200] text-black";
-    return "bg-[#8B0000] text-white";
+    return "bg-[#8B0000] text-black";
   }
 
   return (
     <div className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-4 text-white flex-col gap-2 flex justify-between">
-      <div className="flex items-center justify-center gap-3 hidden xl:block">
+      <div className="hidden xl:flex items-center justify-center gap-3">
         {isDryer ? (
           <div className={`${isAvailable ? "w-[100px] mr-7" : "w-[70px] opacity-40 mt-5"} `}>
             <Image
-              src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
+              src={isAvailable ? "/icons/dryerOpen.png" : "/icons/dryerClosed.png"}
               alt=""
               width={100}
               height={100}
@@ -32,7 +32,7 @@ export default function MachineCard({ machine }) {
         ) : (
           <div className={`${isAvailable ? "w-[100px] ml-7" : "w-[70px] opacity-40 mt-5"}`}>
             <Image
-              src={isAvailable ? "/img/washerOpened.png" : "/img/washerClosed.png"}
+              src={isAvailable ? "/icons/washerOpened.png" : "/icons/washerClosed.png"}
               alt=""
               width={100}
               height={100}

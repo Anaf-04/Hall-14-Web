@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: "HALL RULES", href: "/hall-rules" },
 ];
 
-export const FEATHER_PATH =
+const FEATHER_PATH =
   "M0 0 C0.495 2.475 0.495 2.475 1 5 C2.32 4.67 3.64 4.34 5 4 " +
   "C4.52500588 9.193269 2.6104144 12.76029192 -0.25 17 C-0.63285156 17.59039063 " +
   "-1.01570313 18.18078125 -1.41015625 18.7890625 C-8.20125205 29.10062603 -8.20125205 " +
@@ -30,7 +30,7 @@ export const FEATHER_PATH =
   "-14.595 7.17 -14 7 C-13.67 6.01 -13.34 5.02 -13 4 C-8.81828715 1.52898786 " +
   "-4.88395628 0 0 0 Z";
 
-export default function SiteMenuBlack({ children }) {
+export default function SiteMenu({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pageTop, setPageTop] = useState(false);
   const pageTopButtonRef = useRef(null);
@@ -68,10 +68,10 @@ export default function SiteMenuBlack({ children }) {
         >
           <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20">
             <Image
-              src="/img/Hall14Logo.png"
+              src="/icons/Hall14Logo.png"
               alt=""
               fill
-              className="object-cover absolute right-50 opacity-30 -z-10"
+              className="object-cover absolute right-50 grayscale-100 opacity-10 -z-10"
             />
             {NAV_LINKS.map((link, index) => (
               <Link
@@ -99,7 +99,7 @@ export default function SiteMenuBlack({ children }) {
             CITYUHK
           </span>
           <Image
-            src="/img/navImg.png"
+            src="/icons/navImg.png"
             alt="Hall 14 logo"
             width={72}
             height={72}
@@ -111,6 +111,38 @@ export default function SiteMenuBlack({ children }) {
         </nav>
 
         {children}
+
+        <a
+          href="https://www.instagram.com/cityuhall14?igsi=MTJ2dDgzZ3pqZTk0MA=="
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Visit Hall 14 on Instagram"
+          className={`group fixed top-4 right-4 z-50 flex h-18 w-18 items-center justify-center 
+            border-2 border-[#8B0000] bg-black transition-[transform,opacity,background-color] 
+            ease-out hover:opacity-20 ${menuOpen
+              ? "translate-x-0 opacity-100"
+              : "pointer-events-none translate-x-100 opacity-0"
+            }`}
+        >
+          <span className="absolute bottom-full right-0 top-35 whitespace-nowrap -rotate-90 text-lg font-bold text-white">
+            Follow us
+          </span>
+          <span className="absolute left-[-20] top-8 -translate-x-full -translate-y-1/2 whitespace-nowrap text-lg font-bold text-white">
+            Our Instagram Page
+          </span>
+          <svg
+            fill="#8B0000"
+            width="48"
+            height="48"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M22.3,8.4c-0.8,0-1.4,0.6-1.4,1.4c0,0.8,0.6,1.4,1.4,1.4c0.8,0,1.4-0.6,1.4-1.4C23.7,9,23.1,8.4,22.3,8.4z" />
+            <path d="M16,10.2c-3.3,0-5.9,2.7-5.9,5.9s2.7,5.9,5.9,5.9s5.9-2.7,5.9-5.9S19.3,10.2,16,10.2z M16,19.9c-2.1,0-3.8-1.7-3.8-3.8c0-2.1,1.7-3.8,3.8-3.8c2.1,0,3.8,1.7,3.8,3.8C19.8,18.2,18.1,19.9,16,19.9z" />
+            <path d="M20.8,4h-9.5C7.2,4,4,7.2,4,11.2v9.5c0,4,3.2,7.2,7.2,7.2h9.5c4,0,7.2-3.2,7.2-7.2v-9.5C28,7.2,24.8,4,20.8,4z M25.7,20.8c0,2.7-2.2,5-5,5h-9.5c-2.7,0-5-2.2-5-5v-9.5c0-2.7,2.2-5,5-5h9.5c2.7,0,5,2.2,5,5V20.8z" />
+          </svg>
+        </a>
 
         <button
           type="button"

@@ -29,7 +29,7 @@ export default function MachineCard({ machine }) {
                 {isDryer ? (
                     <div className={`${isAvailable ? "w-[30px] mr-2" : "w-[21px] opacity-40 mb-1.5 "}`}>
                         <Image
-                            src={isAvailable ? "/img/dryerOpen.png" : "/img/dryerClosed.png"}
+                            src={isAvailable ? "/icons/dryerOpen.png" : "/icons/dryerClosed.png"}
                             alt=""
                             width={100}
                             height={100}
@@ -39,7 +39,7 @@ export default function MachineCard({ machine }) {
                 ) : (
                     <div className={`${isAvailable ? "w-[30px] ml-2" : "w-[21px] opacity-40 mt-1.5"}`}>
                         <Image
-                            src={isAvailable ? "/img/washerOpened.png" : "/img/washerClosed.png"}
+                            src={isAvailable ? "/icons/washerOpened.png" : "/icons/washerClosed.png"}
                             alt=""
                             width={100}
                             height={100}

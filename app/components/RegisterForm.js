@@ -104,7 +104,7 @@ export default function RegisterForm({ vacuumFloor, onSubmit, submitting, error 
       <div className="flex items-stretch gap-2">
         <div className="flex w-[100px] shrink-0 items-center gap-2 rounded-tl-3xl rounded-br-3xl bg-black/90 px-2 py-2">
           <Image
-            src="/img/hong-kong.png"
+            src="/icons/hong-kong.png"
             alt="Hong Kong flag"
             width={24}
             height={24}
