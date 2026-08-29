@@ -20,7 +20,7 @@ function ShoeWasherKeyContent() {
           item="SHOE_WASHER_KEY"
           title="Shoe Washer"
           label="shoe washer"
-          borrowHint="To borrow the Shoe Washer, scan the QR code and submit your SID at the Ground Floor security desk."
+          borrowHint="To borrow the Shoe Washer key, scan the QR code and submit your SID at the Ground Floor security desk."
         />
       )}
     </main>
