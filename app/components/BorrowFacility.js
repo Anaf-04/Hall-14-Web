@@ -18,6 +18,13 @@ const ITEM_LABELS = {
   TABLE_TENNIS_SET: "table tennis set",
 };
 
+const ITEM_ICONS = {
+  PS5_CONTROLLER: "/icons/ps5.svg",
+  SHOE_WASHER_KEY: "/icons/shoeWasher.png",
+  TABLE_TENNIS_SET: "/icons/tableTennisSet.png",
+  NINTENDO_SWITCH: "/icons/nintendo.png",
+};
+
 export default function BorrowFacility({ facilityId, nfcKey, backHref, item: expectedItem }) {
   const [checking, setChecking] = useState(true);
   const [keyValid, setKeyValid] = useState(false);
@@ -152,9 +159,14 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
   if (borrowed) {
     return (
       <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
-        <p className="text-sm font-medium">
-          Borrowed! The {facilityLabel} is now yours.
-        </p>
+        <div className="flex items-center gap-2">
+          {ITEM_ICONS[item] && (
+            <img src={ITEM_ICONS[item]} alt="" className="h-10 w-10" />
+          )}
+          <p className="text-sm font-medium">
+            Borrowed! The {facilityLabel} is now yours.
+          </p>
+        </div>
         <a
           href={backHref}
           className="rounded-tl-3xl rounded-br-3xl bg-[#fc8f01] px-4 py-2 text-center text-sm text-black transition-colors hover:bg-[#e58200]"
