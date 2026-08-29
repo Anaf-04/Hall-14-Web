@@ -13,7 +13,7 @@ const TIMER_CONFIG = {
 const ITEM_LABELS = {
   PORTABLE_VACUUM: "vacuum",
   PS5_CONTROLLER: "PS5 controller",
-  SHOE_WASHER_KEY: "shoe washer",
+  SHOE_WASHER_KEY: "Shoe Washer Key",
   NINTENDO_SWITCH: "Nintendo Switch",
   TABLE_TENNIS_SET: "table tennis set",
 };

@@ -13,7 +13,7 @@ const STORAGE_KEYS = {
 const ITEM_LABELS = {
   PORTABLE_VACUUM: "vacuum",
   PS5_CONTROLLER: "PS5 controller",
-  SHOE_WASHER_KEY: "shoe washer",
+  SHOE_WASHER_KEY: "Shoe Washer Key",
   NINTENDO_SWITCH: "Nintendo Switch",
   TABLE_TENNIS_SET: "table tennis set",
 };
@@ -161,11 +161,25 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
       <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <div className="flex items-center gap-2">
           {ITEM_ICONS[item] && (
-            <img src={ITEM_ICONS[item]} alt="" className="h-10 w-10" />
+            <img src={ITEM_ICONS[item]} alt="" className="h-auto w-10" />
           )}
-          <p className="text-sm font-medium">
-            Borrowed! The {facilityLabel} is now yours.
-          </p>
+          <div className="flex flex-col item-center gap-2">
+            {floor && (
+              <p className="text-sm font-medium">
+                Borrowed! The {facilityLabel} is now yours.
+              </p>
+            )}
+            {!floor && (
+              <>
+                <p className="text-xs font-medium">
+                  Please show this message to the guard:
+                </p>
+                <p className="text-md font-medium">
+                  請將此設施移交給這位住戶。
+                </p>
+              </>
+            )}
+          </div>
         </div>
         <a
           href={backHref}

@@ -104,13 +104,15 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
 
   return (
     <div className="relative flex flex-col gap-6 w-full max-w-3xl bg-black/70 p-6 rounded-tl-3xl rounded-br-3xl text-white">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 items-start justify-between">
         <h1 className="text-xl font-semibold text-white">{title}</h1>
         {instructions && (
           <div
             onClick={() => setShowInfo(true)}
-            className="rounded-tl-xl rounded-br-xl bg-[#8B0000] p-1 cursor-pointer"
+            className="rounded-tl-xl rounded-br-xl flex items-center justify-center p-1 gap-1 bg-[#8B0000] w-full cursor-pointer"
           >
+            
+            <div>How to charge the vacuum</div>
             <img
               src="/icons/charge.svg"
               alt=""
@@ -143,17 +145,17 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
             }`}
         >
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold text-white">{instructions.heading}</h1>
+            <h1 className="text-md font-semibold text-white">{instructions.heading}</h1>
             <div
               onClick={() => setShowInfo(false)}
-              className="rounded-tl-xl rounded-br-xl bg-green-900 p-1 cursor-pointer"
+              className="cursor-pointer"
             >
               <img
-                src="/icons/charge.svg"
+                src="/icons/featherCross.png"
                 alt=""
                 width="auto"
                 height="auto"
-                className="object-contain h-5 w-5"
+                className="object-contain h-auto w-8"
               />
             </div>
           </div>
