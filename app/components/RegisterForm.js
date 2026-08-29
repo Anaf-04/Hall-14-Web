@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function RegisterForm({ vacuumFloor, onSubmit, submitting, error }) {
+export default function RegisterForm({ facilityLabel, onSubmit, submitting, error }) {
   const [step, setStep] = useState("details"); // "details" | "otp"
   const [sid, setSid] = useState("");
   const [email, setEmail] = useState("");
@@ -98,7 +98,7 @@ export default function RegisterForm({ vacuumFloor, onSubmit, submitting, error 
   return (
     <form onSubmit={handleDetailsSubmit} className="grid grid-cols-1 gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white sm:p-8">
       <p className="text-sm font-medium">
-        First time borrowing the Floor {vacuumFloor} vacuum. Enter your details.
+        First time borrowing the {facilityLabel}. Enter your details.
       </p>
       <input type="text" inputMode="numeric" placeholder="8-digit Student ID" value={sid} onChange={(event) => setSid(event.target.value)} required pattern="\d{8}" className="rounded-tl-3xl rounded-br-3xl border border-white/20 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-white/50" />
       <div className="flex items-stretch gap-2">

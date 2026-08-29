@@ -3,47 +3,47 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 
 export async function POST(request) {
   const body = await request.json();
-  const { vacuum_id, sid } = body;
+  const { facility_id, sid } = body;
 
-  if (!vacuum_id || !sid) {
+  if (!facility_id || !sid) {
     return NextResponse.json(
-      { error: "Missing vacuum_id or sid." },
+      { error: "Missing facility_id or sid." },
       { status: 400 }
     );
   }
 
-  const { data: vacuum, error: vacuumError } = await supabaseAdmin
-    .from("vacuums")
+  const { data: facility, error: facilityError } = await supabaseAdmin
+    .from("facilities")
     .select("id, status, last_borrower_sid")
-    .eq("id", vacuum_id)
+    .eq("id", facility_id)
     .single();
 
-  if (vacuumError || !vacuum) {
-    return NextResponse.json({ error: "Vacuum not found." }, { status: 404 });
+  if (facilityError || !facility) {
+    return NextResponse.json({ error: "Facility not found." }, { status: 404 });
   }
 
-  if (vacuum.status !== "CHECKED_OUT") {
+  if (facility.status !== "CHECKED_OUT") {
     return NextResponse.json(
-      { error: "This vacuum is not currently checked out." },
+      { error: "This facility is not currently checked out." },
       { status: 409 }
     );
   }
 
-  if (vacuum.last_borrower_sid !== sid) {
+  if (facility.last_borrower_sid !== sid) {
     return NextResponse.json(
-      { error: "This vacuum was checked out by a different SID." },
+      { error: "This facility was checked out by a different SID." },
       { status: 403 }
     );
   }
 
   const { data: updated, error: updateError } = await supabaseAdmin
-    .from("vacuums")
+    .from("facilities")
     .update({
       status: "AVAILABLE",
       last_returned_at: new Date().toISOString(),
       reminder_sent_at: null,
     })
-    .eq("id", vacuum_id)
+    .eq("id", facility_id)
     .select()
     .single();
 
@@ -51,5 +51,5 @@ export async function POST(request) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
-  return NextResponse.json({ vacuum: updated });
+  return NextResponse.json({ facility: updated });
 }

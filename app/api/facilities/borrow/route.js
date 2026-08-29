@@ -3,37 +3,37 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 
 export async function POST(request) {
   const body = await request.json();
-  const { vacuum_id, sid, key, email, phone_number } = body;
+  const { facility_id, sid, key, email, phone_number } = body;
 
-  if (!vacuum_id || !sid || !key) {
+  if (!facility_id || !sid || !key) {
     return NextResponse.json(
-      { error: "Missing vacuum_id, sid, or key." },
+      { error: "Missing facility_id, sid, or key." },
       { status: 400 }
     );
   }
 
-  const { data: vacuum, error: vacuumError } = await supabaseAdmin
-    .from("vacuums")
+  const { data: facility, error: facilityError } = await supabaseAdmin
+    .from("facilities")
     .select("id, status, nfc_secret_key")
-    .eq("id", vacuum_id)
+    .eq("id", facility_id)
     .single();
 
-  if (vacuumError || !vacuum) {
-    return NextResponse.json({ error: "Vacuum not found." }, { status: 404 });
+  if (facilityError || !facility) {
+    return NextResponse.json({ error: "Facility not found." }, { status: 404 });
   }
 
-  if (vacuum.nfc_secret_key !== key) {
+  if (facility.nfc_secret_key !== key) {
     return NextResponse.json(
       {
-        error: "Tap the vacuum's NFC sticker to borrow it.",
+        error: "Tap the facility's NFC sticker to borrow it.",
       },
       { status: 403 }
     );
   }
 
-  if (vacuum.status === "CHECKED_OUT") {
+  if (facility.status === "CHECKED_OUT") {
     return NextResponse.json(
-      { error: "This vacuum is already checked out." },
+      { error: "This facility is already checked out." },
       { status: 409 }
     );
   }
@@ -70,14 +70,14 @@ export async function POST(request) {
   }
 
   const { data: updated, error: updateError } = await supabaseAdmin
-    .from("vacuums")
+    .from("facilities")
     .update({
       status: "CHECKED_OUT",
       last_borrower_sid: sid,
       last_borrowed_at: new Date().toISOString(),
       reminder_sent_at: null,
     })
-    .eq("id", vacuum_id)
+    .eq("id", facility_id)
     .select()
     .single();
 
@@ -85,5 +85,5 @@ export async function POST(request) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
-  return NextResponse.json({ vacuum: updated });
+  return NextResponse.json({ facility: updated });
 }

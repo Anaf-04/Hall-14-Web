@@ -11,17 +11,17 @@ function RegisterPageContent() {
   const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const vacuumId = searchParams.get("v");
+  const facilityId = searchParams.get("v");
   const nfcKey = searchParams.get("key");
 
   async function registerAndBorrow({ sid, email, phone_number }) {
     setSubmitting(true);
     setError(null);
     try {
-      const response = await fetch("/api/vacuums/borrow", {
+      const response = await fetch("/api/facilities/borrow", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vacuum_id: vacuumId, key: nfcKey, sid, email, phone_number }),
+        body: JSON.stringify({ facility_id: facilityId, key: nfcKey, sid, email, phone_number }),
       });
       const data = await response.json();
       if (!response.ok) {
@@ -31,7 +31,7 @@ function RegisterPageContent() {
       localStorage.setItem("hall14_sid", sid);
       localStorage.setItem("hall14_email", email);
       localStorage.setItem("hall14_phone", phone_number);
-      router.replace("/all-vacuum");
+      router.replace("/facilities");
     } catch {
       setError("Network error. Please try again.");
     } finally {
@@ -41,10 +41,10 @@ function RegisterPageContent() {
 
   return (
     <main className="flex w-[90%] flex-col items-center gap-6 py-24 sm:w-[85%]">
-      {vacuumId && nfcKey ? (
-        <RegisterForm vacuumFloor={vacuumId} onSubmit={registerAndBorrow} submitting={submitting} error={error} />
+      {facilityId && nfcKey ? (
+        <RegisterForm facilityLabel="facility" onSubmit={registerAndBorrow} submitting={submitting} error={error} />
       ) : (
-        <p className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">Scan a vacuum NFC sticker to register.</p>
+        <p className="rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">Scan a facility NFC sticker to register.</p>
       )}
     </main>
   );

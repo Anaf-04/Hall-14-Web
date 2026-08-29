@@ -1,4 +1,4 @@
--- Supabase pg_cron setup for the vacuum 10/15-minute timer.
+-- Supabase pg_cron setup for the facility borrow-reminder timer.
 --
 -- IMPORTANT: pg_cron runs inside Supabase's Postgres and calls out over the
 -- network via pg_net — it needs a PUBLIC URL, so this only works once the
@@ -15,11 +15,11 @@ CREATE EXTENSION IF NOT EXISTS pg_net;
 --    Replace <YOUR_VERCEL_URL> and <CRON_SECRET> with real values.
 --    CRON_SECRET must match the CRON_SECRET env var set in Vercel.
 SELECT cron.schedule(
-  'vacuum-timer-check',
+  'facility-timer-check',
   '*/5 * * * *', -- every 5 minutes
   $$
   SELECT net.http_post(
-    url := 'https://<YOUR_VERCEL_URL>/api/cron/vacuum-timer',
+    url := 'https://hall-14-web.vercel.app/api/cron/facility-timer',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'Authorization', 'Bearer <CRON_SECRET>'
@@ -32,4 +32,8 @@ SELECT cron.schedule(
 -- SELECT * FROM cron.job;
 
 -- To remove the job if needed:
+-- SELECT cron.unschedule('facility-timer-check');
+
+-- If a job named 'vacuum-timer-check' already exists from before this
+-- generalization, remove it first:
 -- SELECT cron.unschedule('vacuum-timer-check');

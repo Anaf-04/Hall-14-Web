@@ -10,12 +10,21 @@ const STORAGE_KEYS = {
   phone: "hall14_phone",
 };
 
-export default function BorrowVacuum({ vacuumId, nfcKey }) {
+const ITEM_LABELS = {
+  PORTABLE_VACUUM: "vacuum",
+  PS5_CONTROLLER: "PS5 controller",
+  SHOE_WASHER_KEY: "shoe washer",
+  NINTENDO_SWITCH: "Nintendo Switch",
+  TABLE_TENNIS_SET: "table tennis set",
+};
+
+export default function BorrowFacility({ facilityId, nfcKey, backHref, item: expectedItem }) {
   const [checking, setChecking] = useState(true);
   const [keyValid, setKeyValid] = useState(false);
+  const [item, setItem] = useState(expectedItem ?? null);
   const [floor, setFloor] = useState(null);
   const [roomNumber, setRoomNumber] = useState(null);
-  const [vacuumStatus, setVacuumStatus] = useState(null);
+  const [facilityStatus, setFacilityStatus] = useState(null);
   const [identity, setIdentity] = useState(null);
   const [borrowing, setBorrowing] = useState(false);
   const [borrowError, setBorrowError] = useState(null);
@@ -31,16 +40,17 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
   useEffect(() => {
     async function validate() {
       try {
-        const res = await fetch("/api/vacuums/validate-key", {
+        const res = await fetch("/api/facilities/validate-key", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ vacuum_id: vacuumId, key: nfcKey }),
+          body: JSON.stringify({ facility_id: facilityId, key: nfcKey }),
         });
         const data = await res.json();
         if (res.ok && data.valid) {
           setKeyValid(true);
+          setItem(data.item);
           setFloor(data.floor);
-          setVacuumStatus(data.status);
+          setFacilityStatus(data.status);
           setRoomNumber(data.roomNumber);
         } else {
           setKeyValid(false);
@@ -52,7 +62,7 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
       }
     }
     validate();
-  }, [vacuumId, nfcKey]);
+  }, [facilityId, nfcKey]);
 
   const handleBorrow = useCallback(
     async (formValues) => {
@@ -64,11 +74,11 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
       const phone_number = identity?.phone || formValues?.phone_number;
 
       try {
-        const res = await fetch("/api/vacuums/borrow", {
+        const res = await fetch("/api/facilities/borrow", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            vacuum_id: vacuumId,
+            facility_id: facilityId,
             key: nfcKey,
             sid,
             email,
@@ -93,13 +103,13 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
         setBorrowing(false);
       }
     },
-    [identity, vacuumId, nfcKey]
+    [identity, facilityId, nfcKey]
   );
 
   useEffect(() => {
     if (
       keyValid &&
-      vacuumStatus === "AVAILABLE" &&
+      facilityStatus === "AVAILABLE" &&
       identity?.sid &&
       !borrowing &&
       !borrowed &&
@@ -107,28 +117,33 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
     ) {
       handleBorrow();
     }
-  }, [keyValid, vacuumStatus, identity, borrowing, borrowed, borrowError, handleBorrow]);
+  }, [keyValid, facilityStatus, identity, borrowing, borrowed, borrowError, handleBorrow]);
 
   if (checking || borrowing) {
     return <LoadingScreen />;
   }
 
+  const label = ITEM_LABELS[item] ?? "facility";
+  const facilityLabel = floor != null ? `Floor ${floor} ${label}` : label;
+
   if (!keyValid) {
     return (
       <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <div className="rounded-tl-3xl rounded-br-3xl bg-[#8b0000] p-4 text-center font-semibold">
-          Tap the vacuum&apos;s NFC sticker to borrow it.
+          {item === "PORTABLE_VACUUM"
+            ? "Tap the facility's NFC sticker to borrow it."
+            : "Scan the QR code at the Ground Floor Security Desk to borrow it."}
         </div>
       </div>
     );
   }
 
-  if (vacuumStatus === "CHECKED_OUT" && !borrowed) {
+  if (facilityStatus === "CHECKED_OUT" && !borrowed) {
     return (
       <div className="flex flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <p className="text-sm">
           <span className="text-[#fc8f01]">{roomNumber ? `Room ${roomNumber} ` : "someone else "}</span>
-          is using the 7th floor vacuum.
+          is using the {label}.
         </p>
       </div>
     );
@@ -138,13 +153,13 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
     return (
       <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <p className="text-sm font-medium">
-          Borrowed! Floor {floor} vacuum is now yours.
+          Borrowed! The {facilityLabel} is now yours.
         </p>
         <a
-          href="/all-vacuum"
+          href={backHref}
           className="rounded-tl-3xl rounded-br-3xl bg-[#fc8f01] px-4 py-2 text-center text-sm text-black transition-colors hover:bg-[#e58200]"
         >
-          Back to vacuum status
+          Back to status
         </a>
       </div>
     );
@@ -160,7 +175,7 @@ export default function BorrowVacuum({ vacuumId, nfcKey }) {
 
   return (
     <RegisterForm
-      vacuumFloor={floor}
+      facilityLabel={facilityLabel}
       onSubmit={handleBorrow}
       submitting={borrowing}
       error={borrowError}
