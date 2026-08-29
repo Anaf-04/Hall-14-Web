@@ -45,7 +45,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
                     : "w-0 duration-200"
                 }`}
             />
-            <span className="relative z-10">Return</span>
+            <span className="relative z-10 font-semibold">Return</span>
           </button>
         ) : (<span
           className={`shrink-0 px-2 py-1 text-xs font-semibold rounded-tl-xl rounded-br-xl
