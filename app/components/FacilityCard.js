@@ -19,7 +19,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
           )}
           {!isAvailable && resident?.room_number && (
             icon ? (
-              <div className="flex flex-col sm:flex-row gap-1 sm:gap-3 text-sm text-white/70">
+              <div className="flex flex-col sm:flex-row gap-1 sm:gap-3 text-xs text-white/70">
                 <div>{resident.name?.split(" ")[0]}</div>
                 <div>Room {resident.room_number}</div>
                 <div>+852 {resident.phone_number}</div>
@@ -35,7 +35,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
           <button
             onClick={() => onReturn(facility.id)}
             disabled={returning || succeeded}
-            className="relative shrink-0 w-28 overflow-hidden cursor-pointer py-1 text-xs rounded-tl-xl rounded-br-xl bg-[#fc8f01] text-black disabled:cursor-default"
+            className="relative shrink-0 w-22 overflow-hidden cursor-pointer py-1 text-xs rounded-tl-xl rounded-br-xl bg-[#fc8f01] text-black disabled:cursor-default"
           >
             <span
               className={`absolute inset-0 bg-green-900 ease-linear transition-[width] ${succeeded
