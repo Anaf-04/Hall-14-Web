@@ -50,13 +50,13 @@ export default function Home() {
         </div>
 
         <div className="flex-1 flex-column gap-1 justify-center">
-          <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white transition-colors sm:p-8">
-            <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Meet Our Residence Tutors</h2>
+          <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-[#35063E]/70 p-6 text-white transition-colors sm:p-8">
+            <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Hall 14 Induction Night</h2>
             <p className="text-sm leading-relaxed sm:text-base">
-              Win exciting prizes and grab some snacks. Come down at G/F Lobby.
+              Get to know our Residence Master and Tutors. Participate in kahoot and games to win prizes. Free food. Lucky draws.
             </p>
-            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">7-9PM</h3>
-            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">August 24th - 28th</h3>
+            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">7:30-9:30PM</h3>
+            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">September 3rd</h3>
           </div>
         </div>
       </div>
