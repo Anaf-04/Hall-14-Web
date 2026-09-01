@@ -117,7 +117,7 @@ export default function RegisterForm({ facilityLabel, onSubmit, submitting, erro
       <input type="email" placeholder="Email" value={email} onChange={(event) => setEmail(event.target.value)} required className="rounded-tl-3xl rounded-br-3xl border border-white/20 bg-black/40 px-3 py-2 text-sm text-white placeholder:text-white/50" />
       {(otpError || error) && <p className="text-sm text-red-400">{otpError || error}</p>}
       <button type="submit" disabled={sendingOtp || submitting} className="rounded-tl-3xl rounded-br-3xl bg-[#a35c00] px-4 py-2 text-sm text-white transition-colors hover:bg-[#8b0000] disabled:opacity-50">
-        {sendingOtp ? "Sending code..." : "Send verification code"}
+        {sendingOtp ? "Continuing..." : "Continue"}
       </button>
     </form>
   );

@@ -13,7 +13,8 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
               <img src={icon} alt="" className="h-auto w-10" />
             </span>
           ) : (
-            <span className="shrink-0 font-bold">
+            <span className="shrink-0 font-bold flex items-center gap-1">
+              {facility.floor != null ? <img src={`/img/floor${facility.floor}.png`} alt="" className="h-auto w-7" /> : null}
               {facility.floor != null ? `Floor ${facility.floor}` : label}
             </span>
           )}

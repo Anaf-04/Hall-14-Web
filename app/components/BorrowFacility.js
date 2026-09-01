@@ -163,6 +163,9 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
           {ITEM_ICONS[item] && (
             <img src={ITEM_ICONS[item]} alt="" className="h-auto w-10" />
           )}
+          {floor != null && (
+            <img src={`/img/floor${floor}.png`} alt="" className="h-auto w-7" />
+          )}
           <div className="flex flex-col item-center gap-2">
             {floor && (
               <p className="text-sm font-medium">
