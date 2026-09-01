@@ -36,7 +36,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
           <button
             onClick={() => onReturn(facility.id)}
             disabled={returning || succeeded}
-            className="relative shrink-0 w-22 overflow-hidden cursor-pointer py-1 text-xs rounded-tl-xl rounded-br-xl bg-[#fc8f01] text-black disabled:cursor-default"
+            className="relative shrink-0 w-20 overflow-hidden cursor-pointer py-1 text-xs rounded-tl-xl rounded-br-xl bg-[#fc8f01] text-black disabled:cursor-default"
           >
             <span
               className={`absolute inset-0 bg-green-900 ease-linear transition-[width] ${succeeded
