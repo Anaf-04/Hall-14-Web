@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-export default function MachineCard({ machine }) {
+export default function MachineCard({ machine, borrower }) {
   const leftTime = parseInt(machine["Left Time"], 10);
   const isAvailable = leftTime === 0;
   const isDryer = machine["Machine Type"] === "D";
@@ -45,14 +45,27 @@ export default function MachineCard({ machine }) {
         <div className="flex min-w-0 items-center gap-2">
           <span className="shrink-0 font-bold">{isDryer ? "D" : "W"}{machine["Machine ID"]}</span>
         </div>
+        {borrower && (
+          <div className="hidden sm:flex lg:flex-col items-center gap-3 text-xs text-white/70 ">
+            <div>{borrower.name?.split(" ")[0]}</div>
+            <div>Room {borrower.room_number}</div>
+            <div>+852 {borrower.phone_number}</div>
+          </div>
+        )}
         <span
-          className={`shrink-0 px-2 py-1 text-xs font-semibold rounded-tl-xl rounded-br-xl w-25 text-center ${
-            isAvailable ? "bg-green-900 text-green-200" : timeBgClass()
-          }`}
+          className={`shrink-0 px-2 py-1 text-xs font-semibold rounded-tl-xl rounded-br-xl w-25 text-center ${isAvailable ? "bg-green-900 text-green-200" : timeBgClass()
+            }`}
         >
           {isAvailable ? "Available" : `${leftTime} mins`}
         </span>
       </div>
+      {borrower && (
+        <div className="flex sm:flex-col gap-3 text-xs text-white/70 sm:hidden">
+          <div>{borrower.name?.split(" ")[0]}</div>
+          <div>Room {borrower.room_number}</div>
+          <div>+852 {borrower.phone_number}</div>
+        </div>
+      )}
     </div>
   );
 }

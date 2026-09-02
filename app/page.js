@@ -1,10 +1,43 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import SiteMenu from "./components/SiteMenu";
+import { supabase } from "../lib/supabase/client";
 
 export default function Home() {
+  const [introVideoUrl, setIntroVideoUrl] = useState(null);
+
+  useEffect(() => {
+    async function loadIntroVideo() {
+      const { data } = await supabase
+        .from("media_assets")
+        .select("file_url")
+        .eq("title", "Intro")
+        .eq("media_type", "VIDEO")
+        .maybeSingle();
+
+      if (data) setIntroVideoUrl(data.file_url);
+    }
+
+    loadIntroVideo();
+  }, []);
+
   return (
-    <SiteMenu>
+    <SiteMenu
+      afterHero={
+        introVideoUrl && (
+          <video
+            src={introVideoUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="h-[140px] w-full object-cover sm:h-[570px]"
+          />
+        )
+      }
+    >
       <div className="flex w-[90%] flex-col gap-6 sm:w-[85%] sm:flex-row sm:justify-center py-24">
         <div className="flex-1 flex-column gap-1 justify-center">
           <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white transition-colors sm:p-8">

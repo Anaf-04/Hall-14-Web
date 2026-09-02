@@ -130,14 +130,20 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
     return <LoadingScreen />;
   }
 
-  const label = ITEM_LABELS[item] ?? "facility";
+  const isLaundry = item?.startsWith("Washer_") || item?.startsWith("Dryer_");
+  const label = isLaundry ? item.replace("_", " ") : ITEM_LABELS[item] ?? "facility";
   const facilityLabel = floor != null ? `Floor ${floor} ${label}` : label;
+  const laundryIcon = isLaundry
+    ? item.startsWith("Washer_")
+      ? "/icons/washerOpened.png"
+      : "/icons/dryerOpen.png"
+    : null;
 
   if (!keyValid) {
     return (
       <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <div className="rounded-tl-3xl rounded-br-3xl bg-[#8b0000] p-4 text-center font-semibold">
-          {item === "PORTABLE_VACUUM"
+          {item === "PORTABLE_VACUUM" || item === "LAUNDRY"
             ? "Tap the facility's NFC sticker to borrow it."
             : "Scan the QR code at the Ground Floor Security Desk to borrow it."}
         </div>
@@ -160,19 +166,28 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
     return (
       <div className="flex w-full max-w-3xl flex-col gap-3 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
         <div className="flex items-center gap-2">
-          {ITEM_ICONS[item] && (
-            <img src={ITEM_ICONS[item]} alt="" className="h-auto w-10" />
+          {laundryIcon ? (
+            <img src={laundryIcon} alt="" className="h-auto w-10" />
+          ) : (
+            ITEM_ICONS[item] && (
+              <img src={ITEM_ICONS[item]} alt="" className="h-auto w-10" />
+            )
           )}
           {floor != null && (
             <img src={`/img/floor${floor}.png`} alt="" className="h-auto w-7" />
           )}
           <div className="flex flex-col item-center gap-2">
-            {floor && (
+            {isLaundry && (
+              <p className="text-sm font-medium">
+                Fetching data from {label}. You will be notified when done.
+              </p>
+            )}
+            {!isLaundry && floor && (
               <p className="text-sm font-medium">
                 Borrowed! The {facilityLabel} is now yours.
               </p>
             )}
-            {!floor && (
+            {!isLaundry && !floor && (
               <>
                 <p className="text-xs font-medium">
                   Please show this message to the guard:

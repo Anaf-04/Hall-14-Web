@@ -30,7 +30,7 @@ const FEATHER_PATH =
   "-14.595 7.17 -14 7 C-13.67 6.01 -13.34 5.02 -13 4 C-8.81828715 1.52898786 " +
   "-4.88395628 0 0 0 Z";
 
-export default function SiteMenu({ children }) {
+export default function SiteMenu({ children, afterHero }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pageTop, setPageTop] = useState(false);
   const pageTopButtonRef = useRef(null);
@@ -221,6 +221,8 @@ export default function SiteMenu({ children }) {
           </svg>
         </button>
       </div>
+
+      {afterHero}
 
       <footer className="flex h-[200px] shrink-0 flex-col bg-black text-white">
         <div className="flex flex-1 flex-col items-center justify-center gap-1">
