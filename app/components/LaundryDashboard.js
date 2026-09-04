@@ -70,11 +70,9 @@ export default function LaundryDashboard() {
   }
 
   function borrowerFor(machine) {
-    // Gate on the live "Left Time" too, not just the facilities row's status
-    // — the cron that flips a finished machine back to AVAILABLE only runs
-    // once a minute, so relying on status alone would keep showing the
-    // borrower for a stale window after the machine itself reports done.
-    if (parseInt(machine["Left Time"], 10) === 0) return null;
+    // Keep showing the borrower even once the machine reports "Available"
+    // (Left Time === 0) — laundry is often left behind, so people should
+    // still be able to see who to contact until the facility is checked in.
     const facility = facilitiesByItem[machineKey(machine)];
     return facility?.status === "CHECKED_OUT" ? facility.resident : null;
   }

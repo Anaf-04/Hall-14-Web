@@ -18,6 +18,14 @@ const ITEM_LABELS = {
   TABLE_TENNIS_SET: "table tennis set",
 };
 
+const ITEM_URL = {
+  PORTABLE_VACUUM: "https://hall-14-web.vercel.app/all-vacuum",
+  PS5_CONTROLLER: "https://hall-14-web.vercel.app/ps5Controller",
+  SHOE_WASHER_KEY: "https://hall-14-web.vercel.app/shoeWasherKey",
+  NINTENDO_SWITCH: "https://hall-14-web.vercel.app/nintendoSwitch",
+  TABLE_TENNIS_SET: "https://hall-14-web.vercel.app/tableTennis",
+};
+
 function facilityLabel(facility) {
   const label = ITEM_LABELS[facility.item] ?? "facility";
   return facility.floor != null ? `Floor ${facility.floor} ${label}` : label;
@@ -75,12 +83,13 @@ export async function POST(request) {
       if (email) {
         const label = facilityLabel(f);
         const minutes = Math.round(TIMER_CONFIG[f.item].reminderMs / 60000);
+        const url = ITEM_URL[f.item] ?? "https://hall-14-web.vercel.app/facilities"; 
         try {
           await transporter.sendMail({
             from: `Hall 14 Facilities <${process.env.GMAIL_USER}>`,
             to: email,
             subject: `Please return the ${label}`,
-            text: `You've had the ${label} for ${minutes} minutes. Please return it soon so other residents can use it.`,
+            text: `You've had the ${label} for ${minutes} minutes. Visit ${url} and click Return. Thank you!`,
           });
         } catch (emailError) {
           console.error(`Failed to send reminder for facility ${f.id}:`, emailError);

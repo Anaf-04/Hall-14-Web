@@ -38,14 +38,15 @@ SELECT cron.schedule(
 -- generalization, remove it first:
 -- SELECT cron.unschedule('vacuum-timer-check');
 
--- 3. Schedule the laundry poll every minute. A wash/dry cycle's remaining
---    time isn't a fixed offset like the other facility types — it's
---    whatever CityU's live laundry API reports for that specific machine
---    right now, so this needs to poll much more often than facility-timer.
+-- 3. Schedule the laundry poll every 5 minutes. A wash/dry cycle's
+--    remaining time isn't a fixed offset like the other facility types —
+--    it's whatever CityU's live laundry API reports for that specific
+--    machine right now, so this still needs a tighter poll than
+--    facility-timer's reminder logic, just not down to the minute.
 --    Replace <YOUR_VERCEL_URL> and <CRON_SECRET> with real values.
 SELECT cron.schedule(
   'laundry-timer-check',
-  '* * * * *', -- every minute
+  '*/5 * * * *', -- every 5 minutes
   $$
   SELECT net.http_post(
     url := 'https://hall-14-web.vercel.app/api/cron/laundry-timer',
