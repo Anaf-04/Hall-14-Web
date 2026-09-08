@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import "./SiteMenu.css";
 
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
@@ -36,14 +35,12 @@ export default function SiteMenu({ children, afterHero }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [pageTop, setPageTop] = useState(false);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [visibleTextIndex, setVisibleTextIndex] = useState(0);
   const pageTopButtonRef = useRef(null);
   const afterHeroRef = useRef(null);
-  const firstVideoRef = useRef(null);
-  const secondVideoRef = useRef(null);
-  const thirdVideoRef = useRef(null);
-  const fourthVideoRef = useRef(null);
+  const loveRef = useRef(null);
+  const [loveTop, setLoveTop] = useState(false);
+  const [afterHeroTop, setAfterHeroTop] = useState(false);
+
 
   useEffect(() => {
     const pageTopButton = pageTopButtonRef.current;
@@ -62,41 +59,37 @@ export default function SiteMenu({ children, afterHero }) {
   }, []);
 
   useEffect(() => {
-    const element = afterHeroRef.current;
-    if (!element) return;
+    const loveElement = loveRef.current;
+
+    if (!loveElement) return undefined;
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        element.classList.add("slide-in");
-      }
-    }, { threshold: 0.1 });
+        setLoveTop(true);
+      } 
+    });
 
-    observer.observe(element);
+    observer.observe(loveElement);
+
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (firstVideoRef.current) firstVideoRef.current.currentTime = 0;
-    if (secondVideoRef.current) secondVideoRef.current.currentTime = 0;
-    if (thirdVideoRef.current) thirdVideoRef.current.currentTime = 0;
-    if (fourthVideoRef.current) fourthVideoRef.current.currentTime = 0;
-  }, [currentVideoIndex]);
+    const afterHeroElement = afterHeroRef.current;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleTextIndex((prev) => (prev + 1) % 3);
-    }, 4000);
+    if (!afterHeroElement) return undefined;
 
-    return () => clearInterval(interval);
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setAfterHeroTop(true);
+      } 
+    });
+
+    observer.observe(afterHeroElement);
+
+    return () => observer.disconnect();
   }, []);
 
-  const handleVideoEnd = () => {
-    if (currentVideoIndex === 3) {
-      setCurrentVideoIndex(0);
-    } else {
-      setCurrentVideoIndex((prev) => prev + 1);
-    }
-  };
 
   return (
     <div className="flex min-h-screen flex-1 flex-col">
@@ -270,71 +263,38 @@ export default function SiteMenu({ children, afterHero }) {
       </div>
 
       {pathname === "/" && (
-        <div className="w-full flex flex-col gap-0 bg-black relative">
-          <div className="slide-in-text" style={{ animationDelay: "0ms" }}>
-            <div className="pb-4 pt-12 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
-              LOVE
+        <div className="w-full flex flex-col gap-0 bg-black relative overflow-hidden">
+          <div ref={loveRef}>
+            <div className="pb-4 pt-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold relative z-15">
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-0 -translate-x-[500px] ${loveTop ? 'translate-x-0' : ''}`}>LOVE</div>
             </div>
           </div>
-          <div className="slide-in-text" style={{ animationDelay: "500ms" }}>
-            <div className="py-4 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold">
-              GROWTH
+          <div>
+            <div className="py-8 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold relative z-15">
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-100 -translate-x-[500px] ${loveTop ? 'translate-x-0' : ''}`}>GROWTH</div>
             </div>
           </div>
-          <div className="slide-in-text" style={{ animationDelay: "1000ms" }}>
-            <div className="pt-4 pb-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
-              COURAGE
+          <div>
+            <div className="pt-4 pb-25 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold relative z-15">
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-200 -translate-x-[500px] ${loveTop ? 'translate-x-0' : ''}`}>COURAGE</div>
             </div>
           </div>
-          <video
-            key="video-0"
-            ref={firstVideoRef}
-            src="/img/phBurn.mp4"
-            className="object-contain h-auto w-65 sm:w-100 absolute left-[-80] sm:left-[0] bottom-0"
-            onEnded={handleVideoEnd}
-            autoPlay
-            muted
-            playsInline
-            style={{ display: currentVideoIndex === 0 ? "block" : "none" }}
-          />
-          <video
-            key="video-1"
-            ref={secondVideoRef}
-            src="/img/phLeap.mp4"
-            className="object-contain h-auto w-30 sm:w-55 absolute left-50 sm:left-110 bottom-0"
-            onEnded={handleVideoEnd}
-            autoPlay
-            muted
-            playsInline
-            style={{ display: currentVideoIndex === 1 ? "block" : "none" }}
-          />
-          <video
-            key="video-2"
-            ref={thirdVideoRef}
-            src="/img/phRun.mp4"
-            className="object-contain h-auto w-30 sm:w-55 absolute left-80 sm:left-180 bottom-0"
-            onEnded={handleVideoEnd}
-            autoPlay
-            muted
-            playsInline
-            style={{ display: currentVideoIndex === 2 ? "block" : "none" }}
-          />
-          <video
-            key="video-3"
-            ref={fourthVideoRef}
-            src="/img/phLeap.mp4"
-            className="object-contain h-auto w-30 sm:w-55 absolute left-110 sm:left-230 bottom-0"
-            onEnded={handleVideoEnd}
-            autoPlay
-            muted
-            playsInline
-            style={{ display: currentVideoIndex === 3 ? "block" : "none" }}
-          />
+          <div className="w-200 sm:w-300 absolute bottom-0 left-[-70] sm:left-0" >
+            <img
+              src="/img/phoenix.gif"
+              alt=""
+              width="auto"
+              height="auto"
+              className="object-cover -z-10"
+            />
+          </div>
         </div>
       )}
 
       <div ref={afterHeroRef}>
-        {afterHero}
+        <div className={`transition-all duration-750 ease-out delay-300 -translate-x-[500px] ${afterHeroTop ? 'translate-x-0' : ''}`}>
+          {afterHero}
+        </div>
       </div>
 
       <footer className="flex h-[200px] shrink-0 flex-col bg-black text-white">
