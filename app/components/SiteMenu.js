@@ -294,6 +294,7 @@ export default function SiteMenu({ children, afterHero }) {
             onEnded={handleVideoEnd}
             autoPlay
             muted
+            playsInline
             style={{ display: currentVideoIndex === 0 ? "block" : "none" }}
           />
           <video
@@ -304,6 +305,7 @@ export default function SiteMenu({ children, afterHero }) {
             onEnded={handleVideoEnd}
             autoPlay
             muted
+            playsInline
             style={{ display: currentVideoIndex === 1 ? "block" : "none" }}
           />
           <video
@@ -314,6 +316,7 @@ export default function SiteMenu({ children, afterHero }) {
             onEnded={handleVideoEnd}
             autoPlay
             muted
+            playsInline
             style={{ display: currentVideoIndex === 2 ? "block" : "none" }}
           />
           <video
@@ -324,6 +327,7 @@ export default function SiteMenu({ children, afterHero }) {
             onEnded={handleVideoEnd}
             autoPlay
             muted
+            playsInline
             style={{ display: currentVideoIndex === 3 ? "block" : "none" }}
           />
         </div>
