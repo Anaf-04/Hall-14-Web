@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import "./SiteMenu.css";
 
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
@@ -33,7 +34,14 @@ const FEATHER_PATH =
 export default function SiteMenu({ children, afterHero }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [pageTop, setPageTop] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [visibleTextIndex, setVisibleTextIndex] = useState(0);
   const pageTopButtonRef = useRef(null);
+  const afterHeroRef = useRef(null);
+  const firstVideoRef = useRef(null);
+  const secondVideoRef = useRef(null);
+  const thirdVideoRef = useRef(null);
+  const fourthVideoRef = useRef(null);
 
   useEffect(() => {
     const pageTopButton = pageTopButtonRef.current;
@@ -50,6 +58,43 @@ export default function SiteMenu({ children, afterHero }) {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const element = afterHeroRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        element.classList.add("slide-in");
+      }
+    }, { threshold: 0.1 });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (firstVideoRef.current) firstVideoRef.current.currentTime = 0;
+    if (secondVideoRef.current) secondVideoRef.current.currentTime = 0;
+    if (thirdVideoRef.current) thirdVideoRef.current.currentTime = 0;
+    if (fourthVideoRef.current) fourthVideoRef.current.currentTime = 0;
+  }, [currentVideoIndex]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisibleTextIndex((prev) => (prev + 1) % 3);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleVideoEnd = () => {
+    if (currentVideoIndex === 3) {
+      setCurrentVideoIndex(0);
+    } else {
+      setCurrentVideoIndex((prev) => prev + 1);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-1 flex-col">
@@ -222,7 +267,67 @@ export default function SiteMenu({ children, afterHero }) {
         </button>
       </div>
 
-      {afterHero}
+      <div className="w-full flex flex-col gap-0 bg-black relative">
+        <div className="slide-in-text" style={{ animationDelay: "0ms" }}>
+          <div className="pb-4 pt-12 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
+            LOVE
+          </div>
+        </div>
+        <div className="slide-in-text" style={{ animationDelay: "500ms" }}>
+          <div className="py-4 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold">
+            GROWTH
+          </div>
+        </div>
+        <div className="slide-in-text" style={{ animationDelay: "1000ms" }}>
+          <div className="pt-4 pb-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
+            COURAGE
+          </div>
+        </div>
+        <video
+          key="video-0"
+          ref={firstVideoRef}
+          src="/img/phBurn.mp4"
+          className="object-contain h-auto w-65 sm:w-100 absolute left-[-60] sm:left-[0] bottom-0"
+          onEnded={handleVideoEnd}
+          autoPlay
+          muted
+          style={{ display: currentVideoIndex === 0 ? "block" : "none" }}
+        />
+        <video
+          key="video-1"
+          ref={secondVideoRef}
+          src="/img/phLeap.mp4"
+          className="object-contain h-auto w-30 sm:w-55 absolute left-50 sm:left-110 bottom-0"
+          onEnded={handleVideoEnd}
+          autoPlay
+          muted
+          style={{ display: currentVideoIndex === 1 ? "block" : "none" }}
+        />
+        <video
+          key="video-2"
+          ref={thirdVideoRef}
+          src="/img/phRun.mp4"
+          className="object-contain h-auto w-30 sm:w-55 absolute left-80 sm:left-180 bottom-0"
+          onEnded={handleVideoEnd}
+          autoPlay
+          muted
+          style={{ display: currentVideoIndex === 2 ? "block" : "none" }}
+        />
+        <video
+          key="video-3"
+          ref={fourthVideoRef}
+          src="/img/phLeap.mp4"
+          className="object-contain h-auto w-30 sm:w-55 absolute left-110 sm:left-230 bottom-0"
+          onEnded={handleVideoEnd}
+          autoPlay
+          muted
+          style={{ display: currentVideoIndex === 3 ? "block" : "none" }}
+        />
+      </div>
+
+      <div ref={afterHeroRef}>
+        {afterHero}
+      </div>
 
       <footer className="flex h-[200px] shrink-0 flex-col bg-black text-white">
         <div className="flex flex-1 flex-col items-center justify-center gap-1">
@@ -263,7 +368,7 @@ export default function SiteMenu({ children, afterHero }) {
         </div>
 
         <div className="flex flex-1 flex-col items-center justify-center gap-1 px-8 text-center text-xs text-white/70 sm:text-sm">
-        <div className="flex w-[100%] items-center justify-center gap-2">
+          <div className="flex w-[100%] items-center justify-center gap-2">
             <a href="mailto:hall14mos@gmail.com" className="text-white/70 hover:text-[#8b0000]">
               Contact Us |
             </a>

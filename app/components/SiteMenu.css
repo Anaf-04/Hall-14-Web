@@ -1,0 +1,27 @@
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRightBackground {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.slide-in {
+  animation: slideInFromLeft 0.3s ease-out forwards;
+}
+
+.slide-in-text {
+  animation: slideInFromLeft 0.3s ease-out forwards;
+}

@@ -26,15 +26,40 @@ export default function Home() {
     <SiteMenu
       afterHero={
         introVideoUrl && (
-          <video
-            src={introVideoUrl}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            className="h-[140px] w-full object-cover sm:h-[570px]"
-          />
+          <div className="relative w-full h-[140px] sm:h-[570px]">
+            <video
+              src={introVideoUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="h-full w-full object-cover"
+            />
+            <a
+              href="https://www.instagram.com/reel/DWYtXmIkQOD/?stkn=bmhhejdkNXEzdTM3"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute inset-0 bg-[#8B0000]/10 flex items-center justify-center"
+              aria-label="Watch on Instagram"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="white"
+                className="w-3 h-3 sm:w-10 sm:h-10"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <img
+                src="/icons/playBorder.png"
+                alt=""
+                width="auto"
+                height="auto"
+                className="object-contain h-auto w-8 sm:w-20 absolute" 
+              />
+            </a>
+          </div>
         )
       }
     >
@@ -83,14 +108,14 @@ export default function Home() {
         </div>
 
         <div className="flex-1 flex-column gap-1 justify-center">
-          <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-[#35063E]/70 p-6 text-white transition-colors sm:p-8">
-            <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Hall 14 Induction Night</h2>
-            <p className="text-sm leading-relaxed sm:text-base">
-              Get to know our Residence Master and Tutors. Participate in kahoot and games to win prizes. Free food. Lucky draws.
+          <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-[#fc8f01]/30 p-6 text-white transition-colors sm:p-8">
+            <h2 className="mb-4 text-2xl font-bold sm:text-3xl">SRO Welcome Night</h2> 
+            <p className="text-sm leading-relaxed sm:text-base"> 
+              Join as Helpers for the SRO Welcome Night or visit our booth to win exclusive prizes!
             </p>
-            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">7:30-9:30PM</h3>
-            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">September 3rd</h3>
-          </div>
+            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">8:00-10:00PM</h3>
+            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">September 9th</h3>
+          </div>    
         </div>
       </div>
     </SiteMenu>
