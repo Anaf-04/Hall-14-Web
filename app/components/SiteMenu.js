@@ -290,7 +290,7 @@ export default function SiteMenu({ children, afterHero }) {
             key="video-0"
             ref={firstVideoRef}
             src="/img/phBurn.mp4"
-            className="object-contain h-auto w-65 sm:w-100 absolute left-[-60] sm:left-[0] bottom-0"
+            className="object-contain h-auto w-65 sm:w-100 absolute left-[-80] sm:left-[0] bottom-0"
             onEnded={handleVideoEnd}
             autoPlay
             muted
