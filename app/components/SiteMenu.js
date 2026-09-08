@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import "./SiteMenu.css";
@@ -32,6 +33,7 @@ const FEATHER_PATH =
   "-4.88395628 0 0 0 Z";
 
 export default function SiteMenu({ children, afterHero }) {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [pageTop, setPageTop] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -267,63 +269,65 @@ export default function SiteMenu({ children, afterHero }) {
         </button>
       </div>
 
-      <div className="w-full flex flex-col gap-0 bg-black relative">
-        <div className="slide-in-text" style={{ animationDelay: "0ms" }}>
-          <div className="pb-4 pt-12 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
-            LOVE
+      {pathname === "/" && (
+        <div className="w-full flex flex-col gap-0 bg-black relative">
+          <div className="slide-in-text" style={{ animationDelay: "0ms" }}>
+            <div className="pb-4 pt-12 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
+              LOVE
+            </div>
           </div>
-        </div>
-        <div className="slide-in-text" style={{ animationDelay: "500ms" }}>
-          <div className="py-4 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold">
-            GROWTH
+          <div className="slide-in-text" style={{ animationDelay: "500ms" }}>
+            <div className="py-4 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold">
+              GROWTH
+            </div>
           </div>
-        </div>
-        <div className="slide-in-text" style={{ animationDelay: "1000ms" }}>
-          <div className="pt-4 pb-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
-            COURAGE
+          <div className="slide-in-text" style={{ animationDelay: "1000ms" }}>
+            <div className="pt-4 pb-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold">
+              COURAGE
+            </div>
           </div>
+          <video
+            key="video-0"
+            ref={firstVideoRef}
+            src="/img/phBurn.mp4"
+            className="object-contain h-auto w-65 sm:w-100 absolute left-[-60] sm:left-[0] bottom-0"
+            onEnded={handleVideoEnd}
+            autoPlay
+            muted
+            style={{ display: currentVideoIndex === 0 ? "block" : "none" }}
+          />
+          <video
+            key="video-1"
+            ref={secondVideoRef}
+            src="/img/phLeap.mp4"
+            className="object-contain h-auto w-30 sm:w-55 absolute left-50 sm:left-110 bottom-0"
+            onEnded={handleVideoEnd}
+            autoPlay
+            muted
+            style={{ display: currentVideoIndex === 1 ? "block" : "none" }}
+          />
+          <video
+            key="video-2"
+            ref={thirdVideoRef}
+            src="/img/phRun.mp4"
+            className="object-contain h-auto w-30 sm:w-55 absolute left-80 sm:left-180 bottom-0"
+            onEnded={handleVideoEnd}
+            autoPlay
+            muted
+            style={{ display: currentVideoIndex === 2 ? "block" : "none" }}
+          />
+          <video
+            key="video-3"
+            ref={fourthVideoRef}
+            src="/img/phLeap.mp4"
+            className="object-contain h-auto w-30 sm:w-55 absolute left-110 sm:left-230 bottom-0"
+            onEnded={handleVideoEnd}
+            autoPlay
+            muted
+            style={{ display: currentVideoIndex === 3 ? "block" : "none" }}
+          />
         </div>
-        <video
-          key="video-0"
-          ref={firstVideoRef}
-          src="/img/phBurn.mp4"
-          className="object-contain h-auto w-65 sm:w-100 absolute left-[-60] sm:left-[0] bottom-0"
-          onEnded={handleVideoEnd}
-          autoPlay
-          muted
-          style={{ display: currentVideoIndex === 0 ? "block" : "none" }}
-        />
-        <video
-          key="video-1"
-          ref={secondVideoRef}
-          src="/img/phLeap.mp4"
-          className="object-contain h-auto w-30 sm:w-55 absolute left-50 sm:left-110 bottom-0"
-          onEnded={handleVideoEnd}
-          autoPlay
-          muted
-          style={{ display: currentVideoIndex === 1 ? "block" : "none" }}
-        />
-        <video
-          key="video-2"
-          ref={thirdVideoRef}
-          src="/img/phRun.mp4"
-          className="object-contain h-auto w-30 sm:w-55 absolute left-80 sm:left-180 bottom-0"
-          onEnded={handleVideoEnd}
-          autoPlay
-          muted
-          style={{ display: currentVideoIndex === 2 ? "block" : "none" }}
-        />
-        <video
-          key="video-3"
-          ref={fourthVideoRef}
-          src="/img/phLeap.mp4"
-          className="object-contain h-auto w-30 sm:w-55 absolute left-110 sm:left-230 bottom-0"
-          onEnded={handleVideoEnd}
-          autoPlay
-          muted
-          style={{ display: currentVideoIndex === 3 ? "block" : "none" }}
-        />
-      </div>
+      )}
 
       <div ref={afterHeroRef}>
         {afterHero}
