@@ -37,8 +37,6 @@ export default function SiteMenu({ children, afterHero }) {
   const [pageTop, setPageTop] = useState(false);
   const pageTopButtonRef = useRef(null);
   const afterHeroRef = useRef(null);
-  const loveRef = useRef(null);
-  const [loveTop, setLoveTop] = useState(false);
   const [afterHeroTop, setAfterHeroTop] = useState(false);
 
 
@@ -59,22 +57,6 @@ export default function SiteMenu({ children, afterHero }) {
   }, []);
 
   useEffect(() => {
-    const loveElement = loveRef.current;
-
-    if (!loveElement) return undefined;
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setLoveTop(true);
-      } 
-    });
-
-    observer.observe(loveElement);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
     const afterHeroElement = afterHeroRef.current;
 
     if (!afterHeroElement) return undefined;
@@ -82,7 +64,7 @@ export default function SiteMenu({ children, afterHero }) {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setAfterHeroTop(true);
-      } 
+      }
     });
 
     observer.observe(afterHeroElement);
@@ -264,19 +246,19 @@ export default function SiteMenu({ children, afterHero }) {
 
       {pathname === "/" && (
         <div className="w-full flex flex-col gap-0 bg-black relative overflow-hidden">
-          <div ref={loveRef}>
+          <div ref={afterHeroRef}>
             <div className="pb-4 pt-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold relative z-15">
-              <div className={`absolute right-10 transition-all duration-750 ease-out delay-0 -translate-x-[500px] ${loveTop ? 'translate-x-0' : ''}`}>LOVE</div>
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-0 -translate-x-[500px] sm:-translate-x-[2000px] ${afterHeroTop ? 'translate-x-0 sm:translate-x-0' : ''}`}>LOVE</div>
             </div>
           </div>
           <div>
             <div className="py-8 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold relative z-15">
-              <div className={`absolute right-10 transition-all duration-750 ease-out delay-100 -translate-x-[500px] ${loveTop ? 'translate-x-0' : ''}`}>GROWTH</div>
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-100 -translate-x-[500px] sm:-translate-x-[2000px] ${afterHeroTop ? 'translate-x-0 sm:translate-x-0' : ''}`}>GROWTH</div>
             </div>
           </div>
           <div>
             <div className="pt-4 pb-25 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold relative z-15">
-              <div className={`absolute right-10 transition-all duration-750 ease-out delay-200 -translate-x-[500px] ${loveTop ? 'translate-x-0' : ''}`}>COURAGE</div>
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-200 -translate-x-[500px] sm:-translate-x-[2000px] ${afterHeroTop ? 'translate-x-0 sm:translate-x-0' : ''}`}>COURAGE</div>
             </div>
           </div>
           <div className="w-200 sm:w-300 absolute bottom-0 left-[-70] sm:left-0" >
@@ -291,8 +273,9 @@ export default function SiteMenu({ children, afterHero }) {
         </div>
       )}
 
-      <div ref={afterHeroRef}>
-        <div className={`transition-all duration-750 ease-out delay-300 -translate-x-[500px] ${afterHeroTop ? 'translate-x-0' : ''}`}>
+      <div ref={afterHeroRef} className="relative overflow-hidden">
+        <div className={`transition-all duration-500 ease-out delay-200 -translate-x-[500px] w-full h-[140px] sm:h-[570px] bg-[#8b0000] absolute ${afterHeroTop ? 'translate-x-[500px]' : ''}`}></div> 
+        <div className={`transition-all duration-750 ease-out delay-200 -translate-x-[500px] relative overflow-hidden ${afterHeroTop ? 'translate-x-0' : ''}`}>
           {afterHero}
         </div>
       </div>

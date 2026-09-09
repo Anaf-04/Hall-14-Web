@@ -1,41 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import SiteMenu from "./components/SiteMenu";
-import { supabase } from "../lib/supabase/client";
 
 export default function Home() {
-  const [introVideoUrl, setIntroVideoUrl] = useState(null);
-
-  useEffect(() => {
-    async function loadIntroVideo() {
-      const { data } = await supabase
-        .from("media_assets")
-        .select("file_url")
-        .eq("title", "Intro")
-        .eq("media_type", "VIDEO")
-        .maybeSingle();
-
-      if (data) setIntroVideoUrl(data.file_url);
-    }
-
-    loadIntroVideo();
-  }, []);
 
   return (
     <SiteMenu
       afterHero={
-        introVideoUrl && (
-          <div className="relative w-full h-[140px] sm:h-[570px]">
-            <video
-              src={introVideoUrl}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="h-full w-full object-cover"
-            />
+        <div className="relative w-full h-[140px] sm:h-[570px]">
+          <video
+            src="/video/intro.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="h-full w-full object-cover"
+          />
             <a
               href="https://www.instagram.com/reel/DWYtXmIkQOD/?stkn=bmhhejdkNXEzdTM3"
               target="_blank"
@@ -60,7 +41,6 @@ export default function Home() {
               />
             </a>
           </div>
-        )
       }
     >
       <div className="flex w-[90%] flex-col gap-6 sm:w-[85%] sm:flex-row sm:justify-center py-24">
@@ -98,7 +78,7 @@ export default function Home() {
                   />
                   <div className="flex flex-col gap-3">
                     <h3 className=" text-xs sm:text-xl text-[#fc8f01] font-bold ">Join the Inter-Hall Contest Fun Day (ICFD) Competitions</h3>
-                    <h3 className=" text-xs sm:text-xl text-[#fc8f01] font-bold ">Tug of War (September)</h3>
+                    <h3 className=" text-xs sm:text-xl text-[#fc8f01] font-bold ">Dodgebee (September 19th)</h3>
                   </div>
                 </div>
               </div>
