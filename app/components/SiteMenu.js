@@ -37,7 +37,9 @@ export default function SiteMenu({ children, afterHero }) {
   const [pageTop, setPageTop] = useState(false);
   const pageTopButtonRef = useRef(null);
   const afterHeroRef = useRef(null);
+  const introRef = useRef(null);
   const [afterHeroTop, setAfterHeroTop] = useState(false);
+  const [intro, setIntro] = useState(false);
 
 
   useEffect(() => {
@@ -68,6 +70,22 @@ export default function SiteMenu({ children, afterHero }) {
     });
 
     observer.observe(afterHeroElement);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const introElement = introRef.current;
+
+    if (!introElement) return undefined;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIntro(true);
+      }
+    });
+
+    observer.observe(introElement);
 
     return () => observer.disconnect();
   }, []);
@@ -248,22 +266,22 @@ export default function SiteMenu({ children, afterHero }) {
         <div className="w-full flex flex-col gap-0 bg-black relative overflow-hidden">
           <div ref={afterHeroRef}>
             <div className="pb-4 pt-15 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold relative z-15">
-              <div className={`absolute right-10 transition-all duration-750 ease-out delay-0 -translate-x-[500px] sm:-translate-x-[2000px] ${afterHeroTop ? 'translate-x-0 sm:translate-x-0' : ''}`}>LOVE</div>
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-0 ${afterHeroTop ? 'translate-x-0 sm:translate-x-[-100px]' : '-translate-x-[500px] sm:-translate-x-[2000px]'}`}>LOVE</div>
             </div>
           </div>
           <div>
-            <div className="py-8 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold relative z-15">
-              <div className={`absolute right-10 transition-all duration-750 ease-out delay-100 -translate-x-[500px] sm:-translate-x-[2000px] ${afterHeroTop ? 'translate-x-0 sm:translate-x-0' : ''}`}>GROWTH</div>
+            <div className="py-8 sm:py-12 px-8 text-[#fc8f01] text-right text-4xl sm:text-5xl font-bold relative z-15">
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-100 ${afterHeroTop ? 'translate-x-0 sm:translate-x-[-100px]' : '-translate-x-[500px] sm:-translate-x-[2000px]'}`}>GROWTH</div>
             </div>
           </div>
           <div>
             <div className="pt-4 pb-25 px-8 text-[#8b0000] text-right text-4xl sm:text-5xl font-bold relative z-15">
-              <div className={`absolute right-10 transition-all duration-750 ease-out delay-200 -translate-x-[500px] sm:-translate-x-[2000px] ${afterHeroTop ? 'translate-x-0 sm:translate-x-0' : ''}`}>COURAGE</div>
+              <div className={`absolute right-10 transition-all duration-750 ease-out delay-200 ${afterHeroTop ? 'translate-x-0 sm:translate-x-[-100px]' : '-translate-x-[500px] sm:-translate-x-[2000px]'}`}>COURAGE</div>
             </div>
           </div>
-          <div className="w-200 sm:w-300 absolute bottom-0 left-[-70] sm:left-0" >
+          <div className="w-300 sm:w-400 absolute bottom-0 left-[-80] sm:left-0" >
             <img
-              src="/img/phoenix.gif"
+              src="/img/phoenixTop.gif"
               alt=""
               width="auto"
               height="auto"
@@ -274,11 +292,40 @@ export default function SiteMenu({ children, afterHero }) {
       )}
 
       <div ref={afterHeroRef} className="relative overflow-hidden">
-        <div className={`transition-all duration-500 ease-out delay-200 -translate-x-[500px] w-full h-[140px] sm:h-[570px] bg-[#8b0000] absolute ${afterHeroTop ? 'translate-x-[500px]' : ''}`}></div> 
+        <div className={`transition-all duration-500 ease-out delay-200 -translate-x-[500px] w-full h-[140px] sm:h-[570px] bg-[#8b0000] absolute ${afterHeroTop ? 'translate-x-[500px]' : ''}`}></div>
         <div className={`transition-all duration-750 ease-out delay-200 -translate-x-[500px] relative overflow-hidden ${afterHeroTop ? 'translate-x-0' : ''}`}>
           {afterHero}
         </div>
       </div>
+
+      {pathname === "/" && (
+        <div className="w-full h-[400px] flex flex-col gap-0 bg-black relative overflow-hidden">
+          <div ref={introRef}>
+            <div className="pb-4 pt-10 px-8 text-[#FFF] text-right text-4xl sm:text-5xl font-bold relative z-15">
+              <div className={`absolute transition-all duration-750 ease-out delay-0 ${intro ? 'translate-x-0 sm:translate-x-[100px]' : 'translate-x-[500px] sm:translate-x-[2000px] '}`}>INTRODUCTION</div>
+            </div>
+          </div>
+          <div>
+            <div className="pt-4 pb-25 px-8 font-bold relative z-15">
+              <div className={`absolute text-[#8b0000] text-xl sm:text-2xl transition-all duration-750 ease-out rotate-90 delay-300 ${intro ? 'translate-x-[-30px] translate-y-[120px] sm:translate-x-[50px] sm:translate-y-[100px]' : 'translate-x-[-100px] translate-y-[200px]'}`}>—HMT—</div>
+              <div className={`transition-all text-[#fc8f01] w-[80%] text-l sm:text-xl  duration-750 ease-out delay-200 ${intro ? 'translate-x-10 sm:translate-x-[150px] translate-y-[30px]' : 'translate-x-[-1000px] translate-y-[30px]'}`}>
+                Hi there!<br /><br />
+                We are the Hall Management Team (HMT), a group of students and <span className="text-[#8B0000]">Professor Crystal Jiang</span> who are dedicated to making your hall life enjoyable and memorable.<br /><br />
+                Have you met them yet?<br /><br />
+              </div>
+            </div>
+          </div>
+          <div className="w-300 sm:w-400 absolute bottom-0 right-[-550] sm:left-0 sm:hidden" >
+            <img
+              src="/img/phoenixBottom.gif"
+              alt=""
+              width="auto"
+              height="auto"
+              className="object-cover -z-10"
+            />
+          </div>
+        </div>
+      )}
 
       <footer className="flex h-[200px] shrink-0 flex-col bg-black text-white">
         <div className="flex flex-1 flex-col items-center justify-center gap-1">
