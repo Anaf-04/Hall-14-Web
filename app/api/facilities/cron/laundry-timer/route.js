@@ -52,7 +52,8 @@ export async function POST(request) {
       { cache: "no-store" }
     );
     if (!res.ok) throw new Error("laundry API error");
-    machines = await res.json();
+    const data = await res.json();
+    machines = data.machines || [];
   } catch (fetchError) {
     return NextResponse.json({ error: fetchError.message }, { status: 502 });
   }

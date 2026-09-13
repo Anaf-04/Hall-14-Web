@@ -89,12 +89,12 @@ export default function Home() {
 
         <div className="flex-1 flex-column gap-1 justify-center">
           <div className="flex-1 rounded-tl-3xl rounded-br-3xl bg-[#fc8f01]/30 p-6 text-white transition-colors sm:p-8">
-            <h2 className="mb-4 text-2xl font-bold sm:text-3xl">SRO Welcome Night</h2> 
+            <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Mid Autumn Festival</h2> 
             <p className="text-sm leading-relaxed sm:text-base"> 
-              Join as Helpers for the SRO Welcome Night or visit our booth to win exclusive prizes!
+              Join as Helpers for the Mid Autumn Festival or visit our booth to win exclusive prizes!
             </p>
             <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">8:00-10:00PM</h3>
-            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">September 9th</h3>
+            <h3 className=" text-2xl text-[#fc8f01] font-bold sm:text-3xl">September 24th</h3>
           </div>    
         </div>
       </div>
