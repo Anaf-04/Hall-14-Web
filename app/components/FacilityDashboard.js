@@ -59,7 +59,12 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
       .channel(`facilities-realtime-${item}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "facilities" },
+        {
+          event: "*",
+          schema: "public",
+          table: "facilities",
+          filter: `item=eq.${item}`,
+        },
         () => {
           loadFacilities();
         }

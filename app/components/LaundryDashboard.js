@@ -53,7 +53,24 @@ export default function LaundryDashboard() {
       .channel("facilities-realtime-laundry")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "facilities" },
+        {
+          event: "*",
+          schema: "public",
+          table: "facilities",
+          filter: "item=like.Washer_*",
+        },
+        () => {
+          loadFacilities();
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "facilities",
+          filter: "item=like.Dryer_*",
+        },
         () => {
           loadFacilities();
         }
