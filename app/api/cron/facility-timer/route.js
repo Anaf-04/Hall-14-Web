@@ -69,10 +69,14 @@ export async function POST(request) {
 
   if (toRemind.length > 0) {
     const sids = toRemind.map((f) => f.last_borrower_sid);
-    const { data: residents } = await supabaseAdmin
+    const { data: residents, error: residentsError } = await supabaseAdmin
       .from("residents")
       .select("sid, email, name")
       .in("sid", sids);
+
+    if (residentsError) {
+      console.error("Error fetching residents:", residentsError);
+    }
 
     const emailBySid = new Map(
       (residents ?? []).map((r) => [r.sid, r.email])
@@ -83,7 +87,7 @@ export async function POST(request) {
       if (email) {
         const label = facilityLabel(f);
         const minutes = Math.round(TIMER_CONFIG[f.item].reminderMs / 60000);
-        const url = ITEM_URL[f.item] ?? "https://hall-14-web.vercel.app/facilities"; 
+        const url = ITEM_URL[f.item] ?? "https://hall-14-web.vercel.app/facilities";
         try {
           await transporter.sendMail({
             from: `Hall 14 Facilities <${process.env.GMAIL_USER}>`,
@@ -96,15 +100,19 @@ export async function POST(request) {
         }
       }
 
-      await supabaseAdmin
+      const { error: updateError } = await supabaseAdmin
         .from("facilities")
         .update({ reminder_sent_at: new Date().toISOString() })
         .eq("id", f.id);
+
+      if (updateError) {
+        console.error(`Failed to update reminder_sent_at for facility ${f.id}:`, updateError);
+      }
     }
   }
 
   if (toAutoReturn.length > 0) {
-    await supabaseAdmin
+    const { error: autoReturnError } = await supabaseAdmin
       .from("facilities")
       .update({
         status: "AVAILABLE",
@@ -115,6 +123,10 @@ export async function POST(request) {
         "id",
         toAutoReturn.map((f) => f.id)
       );
+
+    if (autoReturnError) {
+      console.error("Error auto-returning facilities:", autoReturnError);
+    }
   }
 
   return NextResponse.json({

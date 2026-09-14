@@ -72,10 +72,14 @@ export async function POST(request) {
 
   if (finished.length > 0) {
     const sids = finished.map((f) => f.facility.last_borrower_sid);
-    const { data: residents } = await supabaseAdmin
+    const { data: residents, error: residentsError } = await supabaseAdmin
       .from("residents")
       .select("sid, email")
       .in("sid", sids);
+
+    if (residentsError) {
+      console.error("Error fetching residents:", residentsError);
+    }
 
     const emailBySid = new Map((residents ?? []).map((r) => [r.sid, r.email]));
 
@@ -97,7 +101,7 @@ export async function POST(request) {
         }
       }
 
-      await supabaseAdmin
+      const { error: updateError } = await supabaseAdmin
         .from("facilities")
         .update({
           status: "AVAILABLE",
@@ -105,6 +109,10 @@ export async function POST(request) {
           reminder_sent_at: null,
         })
         .eq("id", facility.id);
+
+      if (updateError) {
+        console.error(`Failed to update facility ${facility.id}:`, updateError);
+      }
     }
   }
 
