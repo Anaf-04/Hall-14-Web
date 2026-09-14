@@ -28,22 +28,26 @@ export async function POST(request) {
     const { data: checkedOut, error } = await supabaseAdmin
       .from("facilities")
       .select("id, item, last_borrower_sid, last_borrowed_at")
-      .eq("status", "CHECKED_OUT")
-      .or("item.like.Washer_%,item.like.Dryer_%");
+      .eq("status", "CHECKED_OUT");
 
     if (error) {
       console.error("[laundry-timer] Database query error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    console.log("[laundry-timer] Found checked out facilities:", checkedOut?.length || 0);
+    // Filter to only laundry items (Washer_XX and Dryer_XX)
+    const laundryItems = (checkedOut || []).filter(f =>
+      f.item && (f.item.startsWith("Washer_") || f.item.startsWith("Dryer_"))
+    );
 
-    if (!checkedOut || checkedOut.length === 0) {
+    console.log("[laundry-timer] Found checked out facilities:", checkedOut?.length || 0, "laundry items:", laundryItems.length);
+
+    if (!laundryItems || laundryItems.length === 0) {
       return NextResponse.json({ finished: 0 });
     }
 
     const now = Date.now();
-    const eligible = checkedOut.filter(
+    const eligible = laundryItems.filter(
       (f) => now - new Date(f.last_borrowed_at).getTime() >= GRACE_MS
     );
 
