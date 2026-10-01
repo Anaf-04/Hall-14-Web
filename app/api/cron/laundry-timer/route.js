@@ -16,7 +16,7 @@ function parseLaundryItem(item) {
 // washer/dryer, check whether its matching machine's "Left Time" has hit 0.
 // If so, email the borrower and auto-return the facility (nothing else
 // would ever flip it back to AVAILABLE otherwise).
-export async function POST(request) {
+export async function POST(request) { 
   try {
     const authHeader = request.headers.get("authorization");
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -66,8 +66,8 @@ export async function POST(request) {
       );
       if (!res.ok) throw new Error("laundry API error");
       const data = await res.json();
-      machines = data.machines || [];
-      console.log("[laundry-timer] Fetched machines:", machines.length);
+      machines = Array.isArray(data) ? data : data.machines || [];
+      console.log("[laundry-timer] Fetched machines:", machines.length, data);
     } catch (fetchError) {
       console.error("[laundry-timer] Fetch error:", fetchError);
       return NextResponse.json({ error: fetchError.message }, { status: 502 });
