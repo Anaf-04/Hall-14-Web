@@ -106,7 +106,7 @@ export default function SiteMenu({ children, afterHero }) {
           className={`fixed inset-0 z-30 flex bg-black transition-opacity duration-500 ${menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
         >
-          <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20" style={{ backgroundImage: "url('/img/navbar.png')", backgroundSize: "cover", backgroundPosition: "center", }}>
+          <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20" style={{ backgroundImage: "url('/img/navImg.png')", backgroundSize: "cover", backgroundPosition: "center", }}>
             <Image
               src="/icons/Hall14Logo.png"
               alt=""
@@ -307,8 +307,7 @@ export default function SiteMenu({ children, afterHero }) {
           </div>
           <div>
             <div className="pt-4 pb-25 px-8 font-bold relative z-15">
-              <div className={`absolute text-[#8b0000] text-xl sm:text-2xl transition-all duration-750 ease-out rotate-90 delay-300 ${intro ? 'translate-x-[-30px] translate-y-[120px] sm:translate-x-[50px] sm:translate-y-[100px]' : 'translate-x-[-100px] translate-y-[200px]'}`}>—HMT—</div>
-              <div className={`transition-all text-[#fc8f01] w-[90%] text-l sm:text-xl  duration-750 ease-out delay-200 ${intro ? 'translate-x-10 sm:translate-x-[150px] translate-y-[30px]' : 'translate-x-[-1000px] translate-y-[30px]'}`}>
+              <div className={`transition-all text-[#fc8f01] w-[100%] text-l sm:text-xl  duration-750 ease-out delay-200 ${intro ? 'translate-x-0 sm:translate-x-[150px] translate-y-[30px]' : 'translate-x-[-1000px] translate-y-[30px]'}`}>
                 Hi there!<br /><br />
                 We are the Hall Management Team (HMT), a group of students and <span className="text-[#8B0000]">Professor Crystal Jiang</span> who are dedicated to making your hall life enjoyable and memorable.<br /><br />
                 Feel free to reach out to us!!<br /><br />

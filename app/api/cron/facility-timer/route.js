@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 import { transporter } from "@/lib/mailer";
 import { supabaseAdmin } from "@/lib/supabase/server";
-import { recordFacilityUsage } from "@/lib/facilityUsage";
+import { DAILY_LIMIT_MINUTES, getUsageColumn, recordFacilityUsage } from "@/lib/facilityUsage";
 
-const TIMER_CONFIG = {
-  PORTABLE_VACUUM: { reminderMs: 10 * 60 * 1000, autoReturnMs: 15 * 60 * 1000 },
-  PS5_CONTROLLER: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
-  SHOE_WASHER_KEY: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
-  NINTENDO_SWITCH: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
-  TABLE_TENNIS_SET: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
-};
+// Portable vacuums have their own fixed-offset reminder/auto-return timers
+// (not a daily quota). Everything else with a usage column (PS5, Switch,
+// table tennis, shoe washer) accrues DAILY_LIMIT_MINUTES in 5-min ticks —
+// see the quota branch below.
+const VACUUM_TIMER = { reminderMs: 10 * 60 * 1000, autoReturnMs: 15 * 60 * 1000 };
+const USAGE_TICK_MINUTES = 5;
 
 const ITEM_LABELS = {
   PORTABLE_VACUUM: "vacuum",
@@ -55,14 +54,26 @@ export async function POST(request) {
     const toAutoReturn = [];
 
     for (const f of checkedOut) {
-      const config = TIMER_CONFIG[f.item];
-      if (!config) continue;
+      if (f.item === "PORTABLE_VACUUM") {
+        const elapsed = now - new Date(f.last_borrowed_at).getTime();
+        if (elapsed >= VACUUM_TIMER.autoReturnMs) {
+          toAutoReturn.push(f);
+        } else if (elapsed >= VACUUM_TIMER.reminderMs && !f.reminder_sent_at) {
+          toRemind.push(f);
+        }
+        continue;
+      }
 
-      const elapsed = now - new Date(f.last_borrowed_at).getTime();
-      if (config.autoReturnMs != null && elapsed >= config.autoReturnMs) {
-        toAutoReturn.push(f);
-      } else if (elapsed >= config.reminderMs && !f.reminder_sent_at) {
-        toRemind.push(f);
+      if (getUsageColumn(f.item)) {
+        const totalMinutes = await recordFacilityUsage(
+          supabaseAdmin,
+          f.last_borrower_sid,
+          f.item,
+          USAGE_TICK_MINUTES
+        );
+        if (totalMinutes != null && totalMinutes >= DAILY_LIMIT_MINUTES) {
+          toAutoReturn.push(f);
+        }
       }
     }
 
@@ -91,7 +102,7 @@ export async function POST(request) {
         const email = emailBySid.get(f.last_borrower_sid);
         if (email) {
           const label = facilityLabel(f);
-          const minutes = Math.round(TIMER_CONFIG[f.item].reminderMs / 60000);
+          const minutes = Math.round(VACUUM_TIMER.reminderMs / 60000);
           try {
             await transporter.sendMail({
               from: `Hall 14 Facilities <${process.env.GMAIL_USER}>`,
@@ -119,7 +130,7 @@ export async function POST(request) {
 
       for (const f of toAutoReturn) {
         const email = emailBySid.get(f.last_borrower_sid);
-        if (email && f.floor == null) {
+        if (email && f.item !== "PORTABLE_VACUUM") {
           const label = facilityLabel(f);
           try {
             await transporter.sendMail({
@@ -138,13 +149,6 @@ export async function POST(request) {
 
     if (toAutoReturn.length > 0) {
       console.log("[facility-timer] Auto-returning", toAutoReturn.length, "facilities");
-
-      for (const f of toAutoReturn) {
-        const minutesElapsed = Math.round(
-          (now - new Date(f.last_borrowed_at).getTime()) / 60000
-        );
-        await recordFacilityUsage(supabaseAdmin, f.last_borrower_sid, f.item, minutesElapsed);
-      }
 
       const { error: autoReturnError } = await supabaseAdmin
         .from("facilities")
