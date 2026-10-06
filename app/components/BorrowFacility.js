@@ -189,10 +189,10 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
             )}
             {!isLaundry && !floor && (
               <>
-                <p className="text-xs font-medium">
+                <p className="text-md font-medium">
                   Please show this message to the guard:
                 </p>
-                <p className="text-md font-medium">
+                <p className="text-xl font-medium">
                   請將此設施移交給這位住戶。
                 </p>
               </>

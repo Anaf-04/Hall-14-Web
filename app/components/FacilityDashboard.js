@@ -46,7 +46,7 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
       const { data, error } = await supabase
         .from("facilities")
         .select(
-          "id, floor, status, last_borrower_sid, resident:last_borrower_sid(name, room_number, phone_number)"
+          "id, floor, status, last_borrower_sid, last_borrowed_at, last_returned_at, resident:last_borrower_sid(name, room_number, phone_number)"
         )
         .eq("item", item)
         .order("id", { ascending: true });
