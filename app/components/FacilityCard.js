@@ -31,7 +31,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
     : null;
 
   return (
-    <div className={`rounded-tl-3xl rounded-br-3xl ${isAvailable ? "bg-[#8b0000]/60" : "bg-green-900/60"} text-white relative`}>
+    <div className={`rounded-tl-3xl rounded-br-3xl ${isAvailable ? "bg-green-900" : isMine? "bg-[#fc8f01]/50" : "bg-[#8b0000]/60"} text-white relative`}>
       <div className="rounded-tl-3xl flex items-center justify-between gap-3 bg-black p-4">
         <div className="flex min-w-0 items-center gap-2">
           {icon ? (

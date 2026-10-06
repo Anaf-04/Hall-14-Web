@@ -66,7 +66,7 @@ export default function SiteMenu({ children }) {
           className={`fixed inset-0 z-30 flex bg-black transition-opacity duration-500 ${menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
         >
-          <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20"  style={{ backgroundImage: "url('/img/navbar.png')", backgroundSize: "cover", backgroundPosition: "center", }}>
+          <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20"  style={{ backgroundImage: "url('/img/navImg.png')", backgroundSize: "cover", backgroundPosition: "center", }}>
             <Image
               src="/icons/Hall14Logo.png"
               alt=""

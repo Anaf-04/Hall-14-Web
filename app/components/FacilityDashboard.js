@@ -135,7 +135,7 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
         )}
       </div>
       {borrowHint && <p className="text-xs text-white">{borrowHint}</p>}
-      <div className={`grid ${instructions ? "sm:grid-cols-2" : "sm:grid-cols-1"} grid-cols-1 gap-3`}>
+      <div className={`grid ${instructions ? "sm:grid-cols-2" : "sm:grid-cols-1"} grid-cols-1 gap-10`}>
         {facilities.map((f, idx) => (
           <FacilityCard
             key={f.id}
