@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import { transporter } from "@/lib/mailer";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { recordFacilityUsage } from "@/lib/facilityUsage";
 
 const TIMER_CONFIG = {
   PORTABLE_VACUUM: { reminderMs: 10 * 60 * 1000, autoReturnMs: 15 * 60 * 1000 },
-  PS5_CONTROLLER: { reminderMs: 60 * 60 * 1000, autoReturnMs: null },
-  SHOE_WASHER_KEY: { reminderMs: 60 * 60 * 1000, autoReturnMs: null },
-  NINTENDO_SWITCH: { reminderMs: 60 * 60 * 1000, autoReturnMs: null },
-  TABLE_TENNIS_SET: { reminderMs: 60 * 60 * 1000, autoReturnMs: null },
+  PS5_CONTROLLER: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
+  SHOE_WASHER_KEY: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
+  NINTENDO_SWITCH: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
+  TABLE_TENNIS_SET: { reminderMs: 60 * 60 * 1000, autoReturnMs: 60 * 60 * 1000 },
 };
 
 const ITEM_LABELS = {
@@ -16,14 +17,6 @@ const ITEM_LABELS = {
   SHOE_WASHER_KEY: "Shoe Washer Key",
   NINTENDO_SWITCH: "Nintendo Switch",
   TABLE_TENNIS_SET: "table tennis set",
-};
-
-const ITEM_URL = {
-  PORTABLE_VACUUM: "https://hall-14-web.vercel.app/all-vacuum",
-  PS5_CONTROLLER: "https://hall-14-web.vercel.app/ps5Controller",
-  SHOE_WASHER_KEY: "https://hall-14-web.vercel.app/shoeWasherKey",
-  NINTENDO_SWITCH: "https://hall-14-web.vercel.app/nintendoSwitch",
-  TABLE_TENNIS_SET: "https://hall-14-web.vercel.app/tableTennis",
 };
 
 function facilityLabel(facility) {
@@ -75,12 +68,16 @@ export async function POST(request) {
 
     console.log("[facility-timer] Facilities to remind:", toRemind.length, "to auto-return:", toAutoReturn.length);
 
-    if (toRemind.length > 0) {
-      const sids = toRemind.map((f) => f.last_borrower_sid);
+    const sidsNeedingEmail = [
+      ...toRemind.map((f) => f.last_borrower_sid),
+      ...toAutoReturn.map((f) => f.last_borrower_sid),
+    ];
+
+    if (sidsNeedingEmail.length > 0) {
       const { data: residents, error: residentsError } = await supabaseAdmin
         .from("residents")
         .select("sid, email, name")
-        .in("sid", sids);
+        .in("sid", sidsNeedingEmail);
 
       if (residentsError) {
         console.error("[facility-timer] Error fetching residents:", residentsError);
@@ -95,13 +92,12 @@ export async function POST(request) {
         if (email) {
           const label = facilityLabel(f);
           const minutes = Math.round(TIMER_CONFIG[f.item].reminderMs / 60000);
-          const url = ITEM_URL[f.item] ?? "https://hall-14-web.vercel.app/facilities";
           try {
             await transporter.sendMail({
               from: `Hall 14 Facilities <${process.env.GMAIL_USER}>`,
               to: email,
               subject: `Please return the ${label}`,
-              text: `You've had the ${label} for ${minutes} minutes. Visit ${url} and click Return. Thank you!`,
+              text: `You've had the ${label} for ${minutes} minutes. Please be reminded it will be automatically returned after 5 minutes. Thank you!`,
             });
             console.log("[facility-timer] Reminder email sent to", email);
           } catch (emailError) {
@@ -120,10 +116,36 @@ export async function POST(request) {
           console.log(`[facility-timer] Updated reminder_sent_at for facility ${f.id}`);
         }
       }
+
+      for (const f of toAutoReturn) {
+        const email = emailBySid.get(f.last_borrower_sid);
+        if (email && f.floor == null) {
+          const label = facilityLabel(f);
+          try {
+            await transporter.sendMail({
+              from: `Hall 14 Facilities <${process.env.GMAIL_USER}>`,
+              to: email,
+              subject: `Please return the ${label}`,
+              text: `You have used up the daily time limit (60 minutes) for the ${label}. According to Hall 14 policy, anyone can borrow it now and you have to hand it in. Thank you!`,
+            });
+            console.log("[facility-timer] Daily-limit email sent to", email);
+          } catch (emailError) {
+            console.error(`[facility-timer] Failed to send daily-limit email for facility ${f.id}:`, emailError);
+          }
+        }
+      }
     }
 
     if (toAutoReturn.length > 0) {
       console.log("[facility-timer] Auto-returning", toAutoReturn.length, "facilities");
+
+      for (const f of toAutoReturn) {
+        const minutesElapsed = Math.round(
+          (now - new Date(f.last_borrowed_at).getTime()) / 60000
+        );
+        await recordFacilityUsage(supabaseAdmin, f.last_borrower_sid, f.item, minutesElapsed);
+      }
+
       const { error: autoReturnError } = await supabaseAdmin
         .from("facilities")
         .update({

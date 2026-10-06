@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { checkFacilityQuota } from "@/lib/facilityUsage";
 
 export async function POST(request) {
   const body = await request.json();
@@ -14,7 +15,7 @@ export async function POST(request) {
 
   const { data: facility, error: facilityError } = await supabaseAdmin
     .from("facilities")
-    .select("id, status, nfc_secret_key")
+    .select("id, item, status, nfc_secret_key")
     .eq("id", facility_id)
     .single();
 
@@ -51,6 +52,14 @@ export async function POST(request) {
           "SID NOT FOUND ! Only for Hall 14 Residents !",
       },
       { status: 404 }
+    );
+  }
+
+  const { allowed } = await checkFacilityQuota(supabaseAdmin, sid, facility.item);
+  if (!allowed) {
+    return NextResponse.json(
+      { error: "You've used your 60 minutes for today for this facility. Try again tomorrow." },
+      { status: 403 }
     );
   }
 

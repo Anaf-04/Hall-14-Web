@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { recordFacilityUsage } from "@/lib/facilityUsage";
 
 export async function POST(request) {
   const body = await request.json();
@@ -14,7 +15,7 @@ export async function POST(request) {
 
   const { data: facility, error: facilityError } = await supabaseAdmin
     .from("facilities")
-    .select("id, status, last_borrower_sid")
+    .select("id, item, status, last_borrower_sid, last_borrowed_at")
     .eq("id", facility_id)
     .single();
 
@@ -50,6 +51,11 @@ export async function POST(request) {
   if (updateError) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
+
+  const minutesElapsed = Math.round(
+    (Date.now() - new Date(facility.last_borrowed_at).getTime()) / 60000
+  );
+  await recordFacilityUsage(supabaseAdmin, sid, facility.item, minutesElapsed);
 
   return NextResponse.json({ facility: updated });
 }
