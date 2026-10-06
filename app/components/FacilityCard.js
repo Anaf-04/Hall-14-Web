@@ -99,7 +99,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
             onClick={() => setShowLastBorrowerDetail((prev) => !prev)}
             className="flex w-full cursor-pointer items-center justify-between py-1 px-4 text-xs font-bold text-black"
           >
-            <span>{showLastBorrowerDetail ? "Hide Last Borrower Detail" : "Show Last Borrower Detail"}</span>
+            <span>{showLastBorrowerDetail ? "Hide Previous Borrower Detail" : "Show Previous Borrower Detail"}</span>
             <span className={`inline-block transition-transform duration-300 ${showLastBorrowerDetail ? "rotate-180" : ""}`}>
               \/
             </span>
