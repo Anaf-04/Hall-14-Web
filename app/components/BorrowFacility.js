@@ -189,7 +189,7 @@ export default function BorrowFacility({ facilityId, nfcKey, backHref, item: exp
             )}
             {!isLaundry && !floor && (
               <>
-                <p className="text-md font-medium">
+                <p className="text-xs font-medium">
                   Please show this message to the guard:
                 </p>
                 <p className="text-xl font-medium">
