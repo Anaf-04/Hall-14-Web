@@ -20,13 +20,18 @@ function formatHkDate(dateString) {
   });
 }
 
-export default function FacilityCard({ facility, label, icon, isMine, onReturn, returning, succeeded }) {
+const DAILY_LIMIT_MINUTES = 60;
+
+export default function FacilityCard({ facility, label, icon, isMine, onReturn, returning, succeeded, minutesUsed }) {
   const isAvailable = facility.status === "AVAILABLE";
   const resident = facility.resident;
   const [showLastBorrowerDetail, setShowLastBorrowerDetail] = useState(false);
+  const usedPct = minutesUsed != null
+    ? Math.min(100, Math.round((minutesUsed / DAILY_LIMIT_MINUTES) * 100))
+    : null;
 
   return (
-    <div className="rounded-tl-3xl rounded-br-3xl bg-[#8b0000]/60 text-white relative">
+    <div className={`rounded-tl-3xl rounded-br-3xl ${isAvailable ? "bg-[#8b0000]/60" : "bg-green-900/60"} text-white relative`}>
       <div className="rounded-tl-3xl flex items-center justify-between gap-3 bg-black p-4">
         <div className="flex min-w-0 items-center gap-2">
           {icon ? (
@@ -78,7 +83,7 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
             {isAvailable ? "Available" : "Borrowed"}
           </span>)}
       </div>
-      {isAvailable && (
+      {isAvailable ? (
         <>
           <div
             className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${showLastBorrowerDetail ? "max-h-24" : "max-h-0"
@@ -105,6 +110,15 @@ export default function FacilityCard({ facility, label, icon, isMine, onReturn, 
             </span>
           </div>
         </>
+      ) : (
+        usedPct != null && (
+          <div className="relative h-4 w-full overflow-hidden">
+            <div
+              className="absolute inset-y-0 left-0 bg-black transition-[width] duration-500 ease-linear"
+              style={{ width: `${usedPct}%` }}
+            />
+          </div>
+        )
       )}
 
     </div>

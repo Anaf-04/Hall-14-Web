@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase/client";
 import FacilityCard from "./FacilityCard";
 import LoadingScreen from "./LoadingScreen";
+import { getUsageColumn } from "@/lib/facilityUsage";
 
 const STORAGE_KEYS = {
   sid: "hall14_sid",
@@ -41,12 +42,17 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
     if (sid) setIdentity({ sid, email, phone });
   }, []);
 
+  const usageColumn = getUsageColumn(item);
+
   useEffect(() => {
     async function loadFacilities() {
+      const residentFields = usageColumn
+        ? `name, room_number, phone_number, ${usageColumn}`
+        : "name, room_number, phone_number";
       const { data, error } = await supabase
         .from("facilities")
         .select(
-          "id, floor, status, last_borrower_sid, last_borrowed_at, last_returned_at, resident:last_borrower_sid(name, room_number, phone_number)"
+          `id, floor, status, last_borrower_sid, last_borrowed_at, last_returned_at, resident:last_borrower_sid(${residentFields})`
         )
         .eq("item", item)
         .order("id", { ascending: true });
@@ -140,6 +146,7 @@ export default function FacilityDashboard({ item, title, label, instructions, bo
             onReturn={handleReturn}
             returning={returningId === f.id}
             succeeded={succeededId === f.id}
+            minutesUsed={usageColumn ? f.resident?.[usageColumn] ?? 0 : null}
           />
         ))}
       </div>
