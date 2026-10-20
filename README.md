@@ -32,8 +32,10 @@ The laundry room works differently — it isn't tapped in/out by residents, beca
 - This app's `GET /api/laundry/status` route proxies that external API.
 - `LaundryDashboard` fetches that status and overlays it with Supabase data (via Realtime subscriptions on `Washer_*`/`Dryer_*` rows) to additionally show who is currently using a given machine.
 - `MachineCard` renders the full desktop view (status, remaining time, current/previous borrower, usage stats); `MobileLaundryDisplay` renders a compact icon-based grid for mobile.
+- Residents can optionally scan the QR code attached to the machine they're using to label it as theirs for that cycle, and get an email notification once the cycle completes — so they don't have to keep checking back.
+- Because the last borrower is recorded and shown, other residents can see who used a machine before touching someone else's laundry, and reach out to them directly instead of just removing it.
 
-So laundry usage is tracked automatically from the machine's own sensor data, while every other facility is tracked by resident check-in/check-out via NFC or QR code.
+So laundry usage is tracked automatically from the machine's own sensor data, with residents optionally layering in ownership labeling, completion emails, and borrower visibility on top, while every other facility is tracked by resident check-in/check-out via NFC or QR code.
 
 ## Tech Stack
 
