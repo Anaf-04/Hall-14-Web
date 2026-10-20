@@ -43,13 +43,9 @@ So laundry usage is tracked automatically from the machine's own sensor data, wh
 - **Nodemailer** — resident email OTP verification
 - External Raspberry Pi status API — live laundry machine data
 
-## Getting Started
+## Visit Page
 
 ```bash
-npm install
-npm run dev
+https://hall-14-web.vercel.app/facilities
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
-
-Requires a `.env.local` with Supabase credentials (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) and any mail provider credentials used by the OTP flow. These are not committed to the repo.
