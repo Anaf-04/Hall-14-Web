@@ -306,8 +306,8 @@ export default function SiteMenu({ children, afterHero }) {
             </div>
           </div>
           <div>
-            <div className="pt-4 pb-25 px-8 font-bold relative z-15">
-              <div className={`transition-all text-[#fc8f01] w-[100%] text-l sm:text-xl  duration-750 ease-out delay-200 ${intro ? 'translate-x-0 sm:translate-x-[150px] translate-y-[30px]' : 'translate-x-[-1000px] translate-y-[30px]'}`}>
+            <div className="pt-8 sm:pt-12 pb-25 px-8 font-bold relative z-15">
+              <div className={`text-[#fc8f01] w-[90%] text-l sm:text-xl absolute transition-all duration-750 ease-out delay-0 ${intro ? 'translate-x-0 sm:translate-x-[100px]' : 'translate-x-[-500px]'}`}>
                 Hi there!<br /><br />
                 We are the Hall Management Team (HMT), a group of students and <span className="text-[#8B0000]">Professor Crystal Jiang</span> who are dedicated to making your hall life enjoyable and memorable.<br /><br />
                 Feel free to reach out to us!!<br /><br />
