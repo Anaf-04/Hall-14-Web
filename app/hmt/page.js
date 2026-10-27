@@ -107,189 +107,189 @@ export default function HMT() {
         <h1 className="mt-4 text-2xl font-bold sm:text-3xl text-[#8b0000]">2026-2027</h1>
         <div className="w-full mb-1 h-1 bg-[#8b0000]"></div>
         <div className="grid grid-cols-3 sm:grid-cols-7 gap-1 flex sm:flex-start">
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/anaf.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Senior</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Senior</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/changyuan.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Disciplinary</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Disciplinary</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/ruilin.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Finance</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Finance</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/ethan.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">ICFD</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">ICFD</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/ruhi.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Events</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Events</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/islam.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Facilities</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Facilities</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/chessa.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Advocacy</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Advocacy</h2>
           </div>
         </div>
         <h1 className="mt-4 text-2xl font-bold sm:text-3xl text-[#8b0000]">2025-2026</h1>
         <div className="w-full h-1 mb-1 bg-[#8b0000]"></div>
         <div className="grid grid-cols-3 sm:grid-cols-8 gap-1">
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/mashal.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Senior</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Senior</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/ruilin.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Finance</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Finance</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/kezia.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Events</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Events</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/audrey.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Advocacy</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Advocacy</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/rayan.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">ICFD</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">ICFD</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/jessie.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Disciplinary</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Disciplinary</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/intiser.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Facilities (A)</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Facilities (A)</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/anaf.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Facilities (B)</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Facilities (B)</h2>
           </div>
         </div>
         <h1 className="mt-4 text-2xl mb-1 font-bold sm:text-3xl text-[#8b0000]">2024-2025</h1>
         <div className="w-full h-1 bg-[#8b0000]"></div>
         <div className="grid grid-cols-3 sm:grid-cols-7 gap-1">
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/myrzabek.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Senior</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Senior</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/mashal.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Disciplinary</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Disciplinary</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/kezia.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Events</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Events</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/audrey.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Advocacy</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Advocacy</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/faran.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Finance</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Finance</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/rayan.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">ICFD</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">ICFD</h2>
           </div>
-          <div className="w-[130px]">
+          <div className="w-[110px]">
             <img
               src="/HMT/intiser.png"
               alt="HMT"
               className="object-contain rounded-tl-3xl rounded-br-3xl"
             />
-            <h2 className="mt-1 font-bold text-lg text-[#fff]">Facilities</h2>
+            <h2 className="mt-1 font-bold text-md text-[#fff]">Facilities</h2>
           </div>
         </div>
       </div>
