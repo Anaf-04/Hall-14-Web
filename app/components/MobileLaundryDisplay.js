@@ -2,30 +2,21 @@
 
 import Image from "next/image";
 
-export default function MachineCard({ machine }) {
+export default function MobileLaundryDisplay({ machine }) {
     const leftTime = parseInt(machine["Left Time"], 10);
     const isAvailable = leftTime === 0;
     const isDryer = machine["Machine Type"] === "D";
 
-    function timeBgClass() {
-    if (leftTime < 5) return "bg-green-600 text-black";
-    if (leftTime < 10) return "bg-[#81cd00] text-black";
-    if (leftTime < 15) return "bg-[#cd9c00] text-black";
-    if (leftTime < 20) return "bg-[#cdb400] text-black";
-    if (leftTime < 25) return "bg-[#cd6200] text-black";
-    return "bg-[#8B0000] text-white";
-  }
-
     return (
         <div className="px-1 text-white flex-col gap-2 justify-between flex">
             {isDryer && (
-                <div className="flex items-center justify-center gap-3 xl:hidden">
+                <div className="flex items-center justify-center gap-3">
                     <div className="flex min-w-0 items-center gap-2">
                         <span className="shrink-0 text-[11px]">D{machine["Machine ID"]}</span>
                     </div>
                 </div>
             )}
-            <div className="flex items-center justify-center gap-1 xl:hidden">
+            <div className="flex items-center justify-center gap-1">
                 {isDryer ? (
                     <div className={`${isAvailable ? "w-[30px] mr-2" : "w-[21px] opacity-40 mb-1.5 "}`}>
                         <Image
@@ -49,7 +40,7 @@ export default function MachineCard({ machine }) {
                 )}
             </div>
             {!isDryer && (
-                <div className="flex items-center justify-center gap-3 xl:hidden">
+                <div className="flex items-center justify-center gap-3">
                     <div className="flex min-w-0 items-center gap-2">
                         <span className="shrink-0 text-[11px]">W{machine["Machine ID"]}</span>
                     </div>

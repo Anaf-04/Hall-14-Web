@@ -17,6 +17,8 @@ const ITEM_ICONS = {
   SHOE_WASHER_KEY: "/icons/shoeWasher.png",
   TABLE_TENNIS_SET: "/icons/tableTennisSet.png",
   NINTENDO_SWITCH: "/icons/nintendo.png",
+  SHOPPING_CARTS: "/icons/cart.png",
+  BEACH_BLANKET: "/icons/blanket.png",
 };
 
 export default function FacilityDashboard({ item, title, label, instructions, borrowHint }) {

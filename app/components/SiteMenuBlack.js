@@ -7,7 +7,7 @@ import Link from "next/link";
 const NAV_LINKS = [
   { label: "HOME", href: "/" },
   { label: "FACILITIES", href: "/facilities" },
-  // { label: "MEMORIES", href: "/memories" },
+  { label: "HMT", href: "/hmt" },
   { label: "HALL RULES", href: "/hall-rules" },
 ];
 
@@ -66,12 +66,18 @@ export default function SiteMenu({ children }) {
           className={`fixed inset-0 z-30 flex bg-black transition-opacity duration-500 ${menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
         >
-          <nav className="relative flex flex-1 flex-col items-start justify-center gap-6 overflow-hidden pl-12 sm:pl-20"  style={{ backgroundImage: "url('/img/navImg.png')", backgroundSize: "cover", backgroundPosition: "center", }}>
+          <nav className="relative flex flex-1 flex-col items-start justify-center overflow-hidden pb-30">
             <Image
               src="/icons/Hall14Logo.png"
               alt=""
               fill
               className="object-cover absolute right-50 grayscale-100 opacity-10 -z-10"
+            />
+            <Image
+              src="/icons/halloween.jpg"
+              alt=""
+              fill
+              className="object-cover absolute grayscale-10 opacity-90 -z-20"
             />
             {NAV_LINKS.map((link, index) => (
               <Link
@@ -261,7 +267,7 @@ export default function SiteMenu({ children }) {
         </div>
 
         <div className="flex flex-1 flex-col items-center justify-center gap-1 px-8 text-center text-xs text-white/70 sm:text-sm">
-        <div className="flex w-[100%] items-center justify-center gap-2">
+          <div className="flex w-[100%] items-center justify-center gap-2">
             <a href="mailto:hall14mos@gmail.com" className="text-white/70 hover:text-[#8b0000]">
               Contact Us |
             </a>

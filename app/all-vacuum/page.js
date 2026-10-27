@@ -18,7 +18,7 @@ function AllVacuumContent() {
   const nfcKey = searchParams.get("key");
 
   return (
-    <main className="flex w-[90%] flex-col items-center gap-6 py-24 sm:w-[85%]">
+    <main className="flex w-[98%] flex-col items-center gap-6 mt-[80px] py-1 sm:w-[85%]">
       {facilityId && nfcKey ? (
         <BorrowFacility facilityId={facilityId} nfcKey={nfcKey} backHref="/all-vacuum" item="PORTABLE_VACUUM" />
       ) : (

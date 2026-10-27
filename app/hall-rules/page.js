@@ -1,12 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import SiteMenu from "../components/SiteMenu";
 
 export default function Facilities() {
   return (
     <SiteMenu>
-      <div className="flex flex-col w-[90%] my-25 gap-1 sm:justify-center bg-black/90 p-6 text-white sm:p-8 rounded-tl-3xl rounded-br-3xl">
+      <div className="flex flex-col w-[98%] mt-[85px] mb-1 p-6 gap-1 sm:justify-center bg-black/90 text-white rounded-tl-3xl rounded-br-3xl">
           <h1 className="mb-4 text-2xl font-bold sm:text-3xl text-[#8B0000]">Hall Rules and Regulations of Hall 14</h1>
 
           <h2 className="mt-4 mb-2 text-xl font-bold sm:text-2xl text-[#a35c00]">Preamble</h2>

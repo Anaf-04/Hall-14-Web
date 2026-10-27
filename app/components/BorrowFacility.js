@@ -16,6 +16,8 @@ const ITEM_LABELS = {
   SHOE_WASHER_KEY: "Shoe Washer Key",
   NINTENDO_SWITCH: "Nintendo Switch",
   TABLE_TENNIS_SET: "table tennis set",
+  SHOPPING_CARTS: "shopping cart",
+  BEACH_BLANKET: "beach blanket",
 };
 
 const ITEM_ICONS = {
@@ -23,6 +25,8 @@ const ITEM_ICONS = {
   SHOE_WASHER_KEY: "/icons/shoeWasher.png",
   TABLE_TENNIS_SET: "/icons/tableTennisSet.png",
   NINTENDO_SWITCH: "/icons/nintendo.png",
+  SHOPPING_CARTS: "/icons/cart.png",
+  BEACH_BLANKET: "/icons/blanket.png",
 };
 
 export default function BorrowFacility({ facilityId, nfcKey, backHref, item: expectedItem }) {

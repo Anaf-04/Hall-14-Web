@@ -41,7 +41,9 @@ export default function LaundryDashboard() {
     async function loadFacilities() {
       const { data, error } = await supabase
         .from("facilities")
-        .select("item, status, resident:last_borrower_sid(name, room_number, phone_number)")
+        .select(
+          "item, status, last_borrowed_at, last_returned_at, resident:last_borrower_sid(name, room_number, phone_number)"
+        )
         .or("item.like.Washer_%,item.like.Dryer_%");
       if (!error) {
         setFacilitiesByItem(Object.fromEntries((data ?? []).map((f) => [f.item, f])));
@@ -102,9 +104,9 @@ export default function LaundryDashboard() {
     .sort((a, b) => Number(b["Machine ID"]) - Number(a["Machine ID"]));
 
   return (
-    <div className="flex w-full flex-col gap-6 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
+    <div className="flex w-full flex-col gap-10 rounded-tl-3xl rounded-br-3xl bg-black/70 p-6 text-white">
       <h1 className="text-2xl font-semibold text-white">Hall 14 Laundry Status</h1>
-      <div className="grid grid-cols-7 xl:hidden">
+      <div className="grid grid-cols-7">
         {dryers.map((m) => (
           <MobileLaundryDisplay key={`d-${m["Machine ID"]}`} machine={m} />
         ))}
@@ -113,18 +115,18 @@ export default function LaundryDashboard() {
         ))}
       </div>
       <div className="flex w-full flex-col gap-3">
-        <h2 className="text-lg font-semibold text-white/80">Dryers</h2>
-        <div className="grid grid-cols-1 gap-3 xl:grid-cols-7">
+        <h2 className="text-3xl font-semibold text-white/80">Dryers</h2>
+        <div className="grid grid-cols-1 gap-10">
           {dryers.map((m) => (
-            <MachineCard key={`d-${m["Machine ID"]}`} machine={m} borrower={borrowerFor(m)} />
+            <MachineCard key={`d-${m["Machine ID"]}`} machine={m} borrower={borrowerFor(m)} facility={facilitiesByItem[machineKey(m)]} />
           ))}
         </div>
       </div>
-      <div className="flex w-full flex-col gap-3">
-        <h2 className="text-lg font-semibold text-white/80">Washing Machines</h2>
-        <div className="grid grid-cols-1 gap-3 xl:grid-cols-7">
+      <div className="flex w-full flex-col gap-3 mt-10">
+        <h2 className="text-3xl font-semibold text-white/80">Washing Machines</h2>
+        <div className="grid grid-cols-1 gap-10">
           {washers.map((m) => (
-            <MachineCard key={`w-${m["Machine ID"]}`} machine={m} borrower={borrowerFor(m)} />
+            <MachineCard key={`w-${m["Machine ID"]}`} machine={m} borrower={borrowerFor(m)}facility={facilitiesByItem[machineKey(m)]} />
           ))}
         </div>
       </div>

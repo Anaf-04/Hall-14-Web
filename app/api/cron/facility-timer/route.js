@@ -16,6 +16,8 @@ const ITEM_LABELS = {
   SHOE_WASHER_KEY: "Shoe Washer Key",
   NINTENDO_SWITCH: "Nintendo Switch",
   TABLE_TENNIS_SET: "table tennis set",
+  SHOPPING_CARTS: "shopping cart",
+  BEACH_BLANKET: "beach blanket",
 };
 
 function facilityLabel(facility) {
